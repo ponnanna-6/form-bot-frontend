@@ -6,6 +6,7 @@ import { alertToast, errorToast } from '../../helper/toast'
 import { registerUser } from '../../services/auth'
 import { validateEmail } from '../../helper/utils'
 import GoogleSignInButton from './googleSignInButton'
+import { IoArrowBack } from 'react-icons/io5';
 
 export default function Register() {
     const navigate = useNavigate()
@@ -128,6 +129,9 @@ export default function Register() {
 
     return (
         <div className={styles.container}>
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
+                <IoArrowBack className={styles.backIcon} />
+            </button>
             <Form
                 formFields={formFields}
                 errorMessages={errorMessages}

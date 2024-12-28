@@ -30,3 +30,24 @@
     color: #FFFFFF;
     cursor: pointer;
 }
+.backButton {
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  
+  .backButton:hover {
+    color: #0073ff;
+  }
+  
+  .backIcon {
+    margin-right: 5px;
+    font-size: 20px;
+  }
+  

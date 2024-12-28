@@ -21,7 +21,7 @@ const Home = () => {
                 <LogoImage/>
                 <div className={styles.navButtons}>
                     <button className={styles.signInButton} onClick={() => {navigate('/login')}}>Sign in</button>
-                    <button className={styles.createButton} onClick={() => {navigate('/register')}}>Create a FormBot</button>
+                    <button className={styles.createButton} onClick={() => {navigate('/login')}}>Create a FormBot</button>
                 </div>
             </header>
 

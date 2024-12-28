@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { getIdFromToken, validateEmail } from '../../helper/utils'
 import { loginUser } from '../../services/auth'
 import { alertToast, errorToast } from '../../helper/toast'
+import { IoArrowBack } from 'react-icons/io5';
 
 export default function Login() {
     const navigate = useNavigate()
@@ -93,23 +94,24 @@ export default function Login() {
     }
 
     return (
-        <div className={styles.parentContainer}>
-            <div className={styles.container}>
-                <Form
-                    formFields={formFields}
-                    errorMessages={errorMessages}
-                    error={error}
-                    onSubmit={onSubmit}
-                    buttonText={"Login"}
-                />
-                <p className={styles.lightText}>
-                    Dont have an account?&nbsp;
-                    <span
-                        className={styles.buttonStyle}
-                        onClick={() => navigate('/register')}>Register now
-                    </span>
-                </p>
-            </div>
+        <div className={styles.container}>
+            <button className={styles.backButton} onClick={() => navigate(-1)}>
+                <IoArrowBack className={styles.backIcon} />
+            </button>
+            <Form
+                formFields={formFields}
+                errorMessages={errorMessages}
+                error={error}
+                onSubmit={onSubmit}
+                buttonText={"Login"}
+            />
+            <p className={styles.lightText}>
+                Dont have an account?&nbsp;
+                <span
+                    className={styles.buttonStyle}
+                    onClick={() => navigate('/register')}>Register now
+                </span>
+            </p>
         </div>
     )
 }
