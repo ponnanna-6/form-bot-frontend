@@ -29,7 +29,7 @@ const Home = () => {
             <main className={styles.main}>
                 <h1 className={styles.title}>Build advanced chatbots visually</h1>
                 <p className={styles.subtitle}>
-                    Typebot gives you powerful blocks to create unique chat experiences. Embed them
+                    Typebot gives you powerful blocks to create unique chat experiences.Embed them
                     anywhere on your web/mobile apps and start collecting results like magic.
                 </p>
                 <button className={styles.ctaButton}>Create a FormBot for free</button>

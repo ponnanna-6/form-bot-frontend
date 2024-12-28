@@ -11,20 +11,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 40px;
+    padding: 10px 20px;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
     color: #fff;
 }
 
 .logoImage {
-    width: 40px;
+    width: 20px;
     height: 40px;
     object-fit: contain;
 }
@@ -37,8 +37,7 @@
 .navButtons button {
     margin-left: 10px;
     padding: 10px 20px;
-    border: 2px solid transparent;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -46,17 +45,14 @@
 
 .signInButton {
     background-color: transparent;
-    color: #fff;
-    border-color: #fff;
-}
-
-.signInButton:hover {
-    background-color: #333;
+    color: #7EA6FF;
+    border: 1px solid #7EA6FF;
 }
 
 .createButton {
-    background-color: #0073ff;
+    background-color: var(--button-blue);
     color: #fff;
+    border: none;
 }
 
 .createButton:hover {
@@ -65,11 +61,11 @@
 
 .main {
     text-align: center;
-    padding: 100px 20px;
+    padding: 100px 100px;
 }
 
 .title {
-    font-size: 48px;
+    font-size: 56px;
     font-weight: 800;
     background: linear-gradient(90deg, #6c63ff, #0073ff);
     -webkit-background-clip: text;
@@ -85,10 +81,10 @@
 
 .ctaButton {
     padding: 15px 40px;
-    background-color: #0073ff;
+    background-color: var(--button-blue);
     color: #fff;
     border: none;
-    border-radius: 25px;
+    border-radius: 12px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
