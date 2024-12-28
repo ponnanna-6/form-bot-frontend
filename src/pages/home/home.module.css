@@ -1,0 +1,154 @@
+/* home.module.css */
+
+.container {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logoImage {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+
+.navButtons {
+    display: flex;
+}
+
+.navButtons button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.signInButton {
+    background-color: transparent;
+    color: #fff;
+    border-color: #fff;
+}
+
+.signInButton:hover {
+    background-color: #333;
+}
+
+.createButton {
+    background-color: #0073ff;
+    color: #fff;
+}
+
+.createButton:hover {
+    background-color: #005bcc;
+}
+
+.main {
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.title {
+    font-size: 48px;
+    font-weight: 800;
+    background: linear-gradient(90deg, #6c63ff, #0073ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 20px;
+}
+
+.subtitle {
+    font-size: 20px;
+    color: #ccc;
+    margin-bottom: 40px;
+}
+
+.ctaButton {
+    padding: 15px 40px;
+    background-color: #0073ff;
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.ctaButton:hover {
+    background-color: #005bcc;
+}
+
+.workflowPreview {
+    margin: 50px auto;
+    max-width: 80%;
+    text-align: center;
+}
+
+.previewImage {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+}
+
+.footer {
+    background-color: #0d0d0d;
+    padding: 30px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.footerBrand {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.footerLinks {
+    display: flex;
+    gap: 40px;
+}
+
+.footerLinks h4 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.footerLinks ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footerLinks li {
+    margin-bottom: 10px;
+    color: #aaa;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footerLinks li:hover {
+    color: #fff;
+}
