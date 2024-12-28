@@ -48,6 +48,7 @@ export default function Login() {
             placeholder: "Example@gmail.com",
             type: "email",
             value: formData?.email,
+            label: "Email",
             onChange: (e) => {
                 setFormData({ ...formData, email: e.target.value })
                 setError({ ...error, email: false })
@@ -58,6 +59,7 @@ export default function Login() {
             placeholder: "Atleast 8 characters",
             type: "password",
             value: formData?.password,
+            label: "Password",
             showPassword: false,
             onChange: (e) => {
                 setFormData({ ...formData, password: e.target.value })

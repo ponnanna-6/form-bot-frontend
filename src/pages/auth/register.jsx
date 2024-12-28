@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { alertToast, errorToast } from '../../helper/toast'
 import { registerUser } from '../../services/auth'
 import { validateEmail } from '../../helper/utils'
+import GoogleSignInButton from './googleSignInButton'
 
 export default function Register() {
     const navigate = useNavigate()
@@ -28,6 +29,7 @@ export default function Register() {
             placeholder: "Enter a Username",
             type: "text",
             value: formData?.name,
+            label: "Username",
             onChange: (e) => {
                 setFormData({ ...formData, name: e.target.value })
                 setError({ ...error, name: false })
@@ -35,9 +37,10 @@ export default function Register() {
         },
         {
             name: "email",
-            placeholder: "Example@email.com",
+            placeholder: "Enter your email",
             type: "email",
             value: formData?.email,
+            label: "Email",
             onChange: (e) => {
                 setFormData({ ...formData, email: e.target.value })
                 setError({ ...error, email: false })
@@ -49,17 +52,19 @@ export default function Register() {
             type: "password",
             value: formData?.password,
             showPassword: false,
+            label: "Password",
             onChange: (e) => {
                 setFormData({ ...formData, password: e.target.value })
                 setError({ ...error, password: false })
             },
         },
         {
-            name: "confirm password",
+            name: "confirmPassword",
             placeholder: "********",
             type: "password",
             value: formData?.confirmPassword,
             showPassword: false,
+            label: "Confirm Password",
             onChange: (e) => {
                 setFormData({ ...formData, confirmPassword: e.target.value })
                 setError({ ...error, confirmPassword: false })
@@ -130,11 +135,13 @@ export default function Register() {
                 onSubmit={onSubmit}
                 buttonText={"Register"}
             />
+            <p>OR</p>
+            <GoogleSignInButton />
             <p className={styles.lightText}>
-                Have an account ?&nbsp;
+                Already have an account ?&nbsp;
                 <span
                     className={styles.buttonStyle}
-                    onClick={() => navigate('/login')}>Sign In
+                    onClick={() => navigate('/login')}>Login
                 </span>
             </p>
         </div>

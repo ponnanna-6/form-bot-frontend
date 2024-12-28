@@ -1,26 +1,11 @@
 import styles from './form.module.css'
-import { FaRegUser } from "react-icons/fa";
-import { MdOutlineMailOutline, MdLockOutline, MdOutlineRemoveRedEye } from "react-icons/md";
+import {MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { useState } from 'react';
 
 export default function Form ({formFields, errorMessages, error, onSubmit, buttonText}) {
     const [showPassword, setShowPassword] = useState(false)
     const [confirmShowPassword, setConfirmShowPassword] = useState(false)
-
-    function getIcon (name) {
-        switch (name) {
-            case "name":
-                return <FaRegUser className={styles.iconStyle}/>
-            case "email":
-                return <MdOutlineMailOutline className={styles.iconStyle}/>
-            case "password":
-            case "confirmPassword":
-                return <MdLockOutline className={styles.iconStyle}/>
-            default:
-                break;
-        }
-    }
 
     function togglePasswordVisibility(name) {
         if (name === "password") {
@@ -33,7 +18,8 @@ export default function Form ({formFields, errorMessages, error, onSubmit, butto
     return (
         <form className={styles.formContainer} onSubmit={onSubmit}>
             {formFields.map((item, index) => 
-                <>
+                <>  
+                    <p>{item?.label}</p>
                     <div key={index} className={styles.inputContainer}>
                         <input 
                             value={item?.value}
