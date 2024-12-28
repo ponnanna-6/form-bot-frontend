@@ -19,7 +19,7 @@ export default function Form ({formFields, errorMessages, error, onSubmit, butto
         <form className={styles.formContainer} onSubmit={onSubmit}>
             {formFields.map((item, index) => 
                 <>  
-                    {item?.label && <p>{item?.label}</p>}
+                    <span>{item?.label && <p className={styles.label}>{item?.label}</p>}</span>
                     <div key={index} className={styles.inputContainer}>
                         <input 
                             value={item?.value}
