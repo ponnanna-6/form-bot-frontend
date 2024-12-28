@@ -1,0 +1,80 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    height: 35px;
+    margin-bottom: 1rem;
+    border-radius: 100px;
+    border: 1px solid #D0D0D0;
+}
+
+.inputContainer input {
+    width: 100%;
+    padding: 10px 10px 10px 15px;
+    font-size: 14px;
+    outline: none;
+    background: transparent;
+    border: none;
+}
+
+.inputContainer input::placeholder {
+    color: #828282;
+}
+
+.iconStyle {
+    color: #828282;
+    display: flex;
+    align-self: center;
+    padding: 5px;
+    width: 30px;
+    height: 20px;
+}
+
+.buttonStyle {
+    background-color: #FC8A06;
+    width: 30vw;
+    height: 35px;
+    border-radius: 100px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.passwordToggleIcon {
+    color: grey;
+    display: flex;
+    align-self: center;
+    padding: 5px;
+    width: 20px;
+    height: 20px;
+}
+  
+.passwordToggleIcon:hover {
+    color: #000;
+}
+
+.errorMessage {
+    color: red;
+    font-size: 12px;
+    align-self: center;
+}
+
+input[type="password"]::-ms-reveal {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .inputContainer {
+        width: 80vw;
+    }
+    .buttonStyle {
+        width: 80vw;
+    }
+}
