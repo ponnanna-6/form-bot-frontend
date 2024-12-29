@@ -1,4 +1,5 @@
 @import './helper/colors.css';
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
@@ -10,4 +11,16 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default margin and padding for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }

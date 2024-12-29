@@ -1,14 +1,15 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Register, Login, Home, Settings} from './pages'
+import { Register, Login, Home, Settings, Workspace} from './pages'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+  const userLoggedIn = localStorage.getItem('token');
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={!userLoggedIn ? <Home /> : <Workspace />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/settings' element={<Settings />} />

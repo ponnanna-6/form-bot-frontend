@@ -1,0 +1,115 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.headerDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #fff;
+    justify-content: space-evenly;
+    flex: 1
+}
+
+.shareButton {
+    padding: 5px 12px;
+    background-color: var(--button-blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Dropdown styling */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdownButton {
+    color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #101010;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dropdownIcon {
+    margin-left: 10px;
+}
+
+.dropdownContent {
+    display: block;
+    position: absolute;
+    color: #fff;
+    border-radius: 0px 0px 5px 5px;
+    border: 1px solid #ccc;
+    background-color: #101010;
+}
+
+.dropdownContent div {
+    text-align: left;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-bottom: #ccc solid 1px;
+}
+
+.dropdownContent div:hover {
+    background-color: #000;
+}
+
+/* Theme toggle button styling */
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.toggleSwitch {
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggleSwitch.dark {
+    background-color: #0073ff;
+}
+
+.toggleCircle {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+.toggleSwitch.dark .toggleCircle {
+    transform: translateX(26px);
+}
