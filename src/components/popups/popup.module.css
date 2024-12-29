@@ -1,0 +1,110 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup {
+    background-color: #000;
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(56, 47, 47, 0.8);
+    width: 400px;
+    border: 1px solid #454444;
+}
+
+.popup h2 {
+    text-align: left;
+}
+
+.input {
+    width: 100%;
+    padding: 10px 20px;
+    margin: 20px 0px;
+    border: none;
+    border-radius: 12px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.doneButton, .cancelButton {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    background-color: transparent;
+}
+
+.doneButton {
+    color: var(--button-blue);
+}
+
+.cancelButton {
+    color: white;
+}
+
+/* Share styles */
+
+.sharePopup {
+    background-color: #000;
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(56, 47, 47, 0.8);
+    width: 600px;
+    border: 1px solid #454444;
+}
+
+.sharePopup h1 {
+    text-align: right;
+    cursor: pointer;
+    font-size: 12px;
+    color: red;
+}
+
+.sharePopup h2 {
+    text-align: left;
+}
+
+.shareButton {
+    padding: 8px 12px;
+    background-color: var(--button-blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.rowContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: 'center';
+    margin-top: 20px;
+}
+
+.select {
+    border: none;
+    border-radius: 12px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.select option {
+    background-color: #000;
+    color: #fff;
+}

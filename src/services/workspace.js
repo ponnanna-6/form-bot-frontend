@@ -27,7 +27,7 @@ export const getAllWorkspaces = async () => {
 
 export const shareWorkspace = async (data) => {
     try {
-        //data = {workspaceId, userId, accessType}
+        //data = {email, accessType}
         const id = getIdFromToken()
         const headers = addTokenToHeader({ headers: {} })
         const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/workspace/share`, data, { headers });

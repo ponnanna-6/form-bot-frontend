@@ -70,6 +70,7 @@ export const deleteFolder = async (data) => {
     //data = {folderId}
     const id = getIdFromToken()
     const headers = addTokenToHeader({headers:{}})
+    console.log(data.folderId)
     if(headers) {
       const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/folder/${data.folderId}`, 
         {headers}
