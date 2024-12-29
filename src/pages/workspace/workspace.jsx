@@ -9,9 +9,10 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiOutlineFolderAdd } from "react-icons/hi";
 import CreateFolderPopup from "../../components/popups/createProjectPopup";
 import { toast } from "react-toastify";
-import { alertToast } from "../../components/helper/toast";
+import { alertToast, errorToast } from "../../components/helper/toast";
 import DeleteFolderPopUp from "../../components/popups/deleteProjectPopUp";
 import SharePopup from "../../components/popups/shareWorkspacePopup";
+import { addForm, getAllFormsInWorkspace } from "../../services/form";
 
 const Workspace = () => {
     const navigate = useNavigate()
@@ -28,7 +29,7 @@ const Workspace = () => {
     const [showDeleteFolderPopup, setShowDeleteFolderPopup] = useState(false);
 
     //form states
-    const [forms, setForms] = useState([{ name: "first" }]);
+    const [forms, setForms] = useState([]);
     const [showCreateFormPopup, setShowCreateFormPopup] = useState(false);
     const [showDeleteFormPopup, setShowDeleteFormPopup] = useState(false);
     const [selectForm, setSelectForm] = useState(null);
@@ -61,10 +62,24 @@ const Workspace = () => {
                 setFolders(res.data.folders)
             }
         }
+
         if (selectedWorkspace) {
             getFolderData()
         }
     }, [selectedWorkspace, refreshData]);
+
+    useEffect(() => {
+        const getFormData = async () => {
+            const res = await getAllFormsInWorkspace(selectedWorkspace?._id, selectedFolder?._id)
+            console.log(res)
+            if (res.status == 200) {
+                setForms(res.data.forms)
+            }
+        }
+        if (selectedWorkspace) {
+            getFormData()
+        }
+    }, [selectedFolder]);
 
     const dropdownRef = useRef(null);
 
@@ -134,13 +149,24 @@ const Workspace = () => {
         }
     }
 
+    const deleteFormOnClick = async () => {
+        setShowDeleteFolderPopup(false)
+        const res = await deleteFolder({ folderId: selectedFolder?._id })
+        if (res.status == 200) {
+            alertToast(res.message)
+            setRefreshData(!refreshData)
+        } else {
+            alertToast(res.message)
+        }
+    }
+
     const closePopup = () => {
         setShowCreateFolderPopup(false)
         setShowDeleteFolderPopup(false)
         setShowCreateFormPopup(false)
         setShowDeleteFormPopup(false)
     }
-
+    
     const folderItem = (folder) => {
         function selectFolder() {
             setSelectedFolder(folder)
@@ -150,6 +176,7 @@ const Workspace = () => {
             <div
                 className={styles.folderItem}
                 onClick={selectFolder}
+                key={`folder-${folder?._id}`}
                 style={folder?._id === selectedFolder?._id ? { backgroundColor: '#D9D9D9', color: '#000' } : {}}
             >
                 <p>{folder?.name}</p>
@@ -182,6 +209,18 @@ const Workspace = () => {
         if (res.status == 200) {
             alertToast(res.message)
             setRefreshData(!refreshData)
+        }
+    }
+
+    const onCreateForm = async (folderName) => {
+        console.log("HERE")
+        setShowCreateFormPopup(true)
+        const res = await addForm(folderName, selectedWorkspace?._id, selectedFolder?._id)
+        if (res.status == 200) {
+            alertToast(res.message)
+            setRefreshData(!refreshData)
+        } else {
+            errorToast(res.message)
         }
     }
 
@@ -232,13 +271,13 @@ const Workspace = () => {
             {(showCreateFolderPopup || showCreateFormPopup) &&
                 <CreateFolderPopup
                     onClose={closePopup}
-                    onCreate={onCreateFolder}
+                    onCreate={showCreateFolderPopup ? onCreateFolder : onCreateForm}
                     folder={showCreateFolderPopup}
                 />}
             {(showDeleteFolderPopup || showDeleteFormPopup) &&
                 <DeleteFolderPopUp
                     onClose={closePopup}
-                    onConfirm={deleteFolderOnClick}
+                    onConfirm={showDeleteFolderPopup ? deleteFolderOnClick : deleteFormOnClick}
                     folder={showDeleteFolderPopup}
                 />}
             {showSharePopup &&
