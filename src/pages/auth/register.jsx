@@ -7,6 +7,9 @@ import { registerUser } from '../../services/auth'
 import { validateEmail } from '../../helper/utils'
 import GoogleSignInButton from './googleSignInButton'
 import { IoArrowBack } from 'react-icons/io5';
+import triangle from '../../assets/triangle.png'
+import rightCircle from '../../assets/rightCircle.png'
+import bottomCircle from '../../assets/bottonCircle.png'
 
 export default function Register() {
     const navigate = useNavigate()
@@ -96,10 +99,10 @@ export default function Register() {
             }
         },
         confirmPassword: {
-            message: "Password should be min 8 characters",
+            message: "Enter same password on both fields",
             isValid: formData.confirmPassword == formData.password,
             onError: () => {
-                setError((error) => ({ ...error, password: true }))
+                setError((error) => ({ ...error, confirmPassword: true }))
             }
         }
     }
@@ -128,26 +131,33 @@ export default function Register() {
     }
 
     return (
-        <div className={styles.container}>
-            <button className={styles.backButton} onClick={() => navigate(-1)}>
+        <>
+            <div className={styles.backButton} onClick={() => navigate(-1)}>
                 <IoArrowBack className={styles.backIcon} />
-            </button>
-            <Form
-                formFields={formFields}
-                errorMessages={errorMessages}
-                error={error}
-                onSubmit={onSubmit}
-                buttonText={"Register"}
-            />
-            <p>OR</p>
-            <GoogleSignInButton />
-            <p className={styles.lightText}>
-                Already have an account ?&nbsp;
-                <span
-                    className={styles.buttonStyle}
-                    onClick={() => navigate('/login')}>Login
-                </span>
-            </p>
-        </div>
+            </div>
+            <div className={styles.container}>
+                <img src={triangle} alt="" className={styles.triangleImage} />
+                <img src={rightCircle} alt="" className={styles.rightCircleImage} />
+                <img src={bottomCircle} alt="" className={styles.bottomCircleImage} />
+                <div className={styles.formContainer}>
+                    <Form
+                        formFields={formFields}
+                        errorMessages={errorMessages}
+                        error={error}
+                        onSubmit={onSubmit}
+                        buttonText={"Sign Up"}
+                    />
+                </div>
+                <p style={{fontSize: '8px'}}>OR</p>
+                <GoogleSignInButton />
+                <p className={styles.lightText}>
+                    Already have an account ?&nbsp;
+                    <span
+                        className={styles.buttonStyle}
+                        onClick={() => navigate('/login')}>Login
+                    </span>
+                </p>
+            </div>
+        </>
     )
 }

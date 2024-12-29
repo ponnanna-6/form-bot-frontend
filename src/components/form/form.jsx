@@ -19,7 +19,7 @@ export default function Form ({formFields, errorMessages, error, onSubmit, butto
         <form className={styles.formContainer} onSubmit={onSubmit}>
             {formFields.map((item, index) => 
                 <>  
-                    <span>{item?.label && <p className={styles.label}>{item?.label}</p>}</span>
+                    <span>{item?.label && <p className={styles.label} style={error[item?.name] ? { color: "red" } : {}}>{item?.label}</p>}</span>
                     <div key={index} className={styles.inputContainer}>
                         <input 
                             value={item?.value}
@@ -31,6 +31,7 @@ export default function Form ({formFields, errorMessages, error, onSubmit, butto
                             onChange={item?.onChange}
                             placeholder={item?.placeholder}
                             className={styles.inputStyle}
+                            style={error[item?.name] ? { border: "1px solid red", borderRadius: "12px" } : {}}
                         />
                         {item?.name === "password" && (
                             showPassword 

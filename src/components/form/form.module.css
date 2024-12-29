@@ -7,18 +7,17 @@
 .inputContainer {
     display: flex;
     flex-direction: row;
-    width: 30vw;
+    width: 20vw;
     height: 35px;
     margin-bottom: 1rem;
     border-radius: 12px;
-    border: 1px solid #D0D0D0;
+    border: 1px solid #D0D0D050;
 }
 
 .inputContainer input {
     width: 100%;
     padding: 10px 10px 10px 15px;
     font-size: 14px;
-    outline: none;
     background: transparent;
     border: none;
 }
@@ -38,7 +37,7 @@
 
 .buttonStyle {
     background-color: var(--button-blue);
-    width: 30vw;
+    width: 20vw;
     height: 35px;
     border-radius: 12px;
     margin-top: 1rem;
@@ -62,9 +61,11 @@
 }
 
 .errorMessage {
-    color: red;
+    color: #522224;
     font-size: 12px;
-    align-self: center;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 10px;
 }
 
 input[type="password"]::-ms-reveal {
@@ -73,12 +74,5 @@ input[type="password"]::-ms-reveal {
 
 .label {
     margin-bottom: 6px;
-}
-@media (max-width: 768px) {
-    .inputContainer {
-        width: 80vw;
-    }
-    .buttonStyle {
-        width: 80vw;
-    }
+    font-size: 12px;
 }

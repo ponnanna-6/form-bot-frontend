@@ -52,7 +52,10 @@ const Workspace = () => {
                 setSelectedWorkspace(res.data.workspaces[0])
             }
         }
-        getData()
+        const userLoggedIn = localStorage.getItem("token")
+        if(userLoggedIn){
+            getData()
+        }
     }, []);
 
     useEffect(() => {

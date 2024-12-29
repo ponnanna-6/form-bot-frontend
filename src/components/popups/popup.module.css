@@ -23,11 +23,12 @@
 
 .popup h2 {
     text-align: left;
+    font-weight: 400;
 }
 
 .input {
     width: 100%;
-    padding: 10px 20px;
+    padding: 15px;
     margin: 20px 0px;
     border: none;
     border-radius: 12px;
@@ -43,12 +44,12 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 18px;
     background-color: transparent;
 }
 
 .doneButton {
-    color: var(--button-blue);
+    color: #4B83FF;
 }
 
 .cancelButton {
@@ -76,12 +77,13 @@
 
 .sharePopup h2 {
     text-align: left;
+    font-weight: 500;
 }
 
 .shareButton {
     padding: 8px 12px;
     background-color: var(--button-blue);
-    color: #fff;
+    color: #ffffff;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -107,4 +109,20 @@
 .select option {
     background-color: #000;
     color: #fff;
+}
+
+/* delete styling */
+.deletePopup {
+    background-color: #000;
+    padding: 20px 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(56, 47, 47, 0.8);
+    width: 400px;
+    border: 1px solid #454444;
+}
+
+.deletePopup h2 {
+    font-weight: 500;
+    margin-bottom: 30px;
 }

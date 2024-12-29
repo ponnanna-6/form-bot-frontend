@@ -3,8 +3,13 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    position: relative;
+    height: 80vh;
 }
 
+.formContainer {
+    display: flex;
+}
 
 .lightText {
     font-family: 'Open Sans', sans-serif;
@@ -21,7 +26,7 @@
 
 .buttonStyle2 {
     background-color: var(--button-blue);
-    width: 30vw;
+    width: 20vw;
     height: 35px;
     border-radius: 12px;
     margin-top: 1rem;
@@ -33,13 +38,14 @@
 .backButton {
     display: flex;
     align-items: center;
-    background-color: transparent;
     color: #fff;
     border: none;
     font-size: 16px;
     font-weight: 500;
     cursor: pointer;
     transition: color 0.3s ease;
+    width: "100%";
+    padding: 50px;
   }
   
   .backButton:hover {
@@ -49,5 +55,27 @@
   .backIcon {
     margin-right: 5px;
     font-size: 20px;
+  }
+
+  .triangleImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 250px;
+  }
+
+  .rightCircleImage {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .bottomCircleImage {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 100px;
+    z-index: -1;
   }
   
