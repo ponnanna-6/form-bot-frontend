@@ -113,3 +113,40 @@
 .toggleSwitch.dark .toggleCircle {
     transform: translateX(26px);
 }
+
+/* Folder item styles */
+.folderContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 50px;
+}
+
+.folderItem {
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    border: 1px solid #D9D9D9;
+    cursor: pointer;
+    border-radius: 6px;
+    background-color: #FFFFFF14;
+}
+
+.folderItem:hover {
+    background-color: #000;
+}
+
+.deleteIcon {
+    margin-left: 10px;
+    color: red;
+}
+
+.deleteIcon:hover {
+    color: #FF0000;
+    font-size: 24px;
+}
+
+.folderIcon {
+    margin-right: 10px;
+}

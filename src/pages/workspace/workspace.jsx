@@ -4,6 +4,9 @@ import logo from '../../assets/logo.png';
 import { useNavigate } from "react-router-dom";
 import { getAllWorkspaces } from '../../services/workspace'
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { getAllFoldersInWorkspace } from "../../services/folders";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { HiOutlineFolderAdd } from "react-icons/hi";
 
 const Workspace = () => {
     const navigate = useNavigate()
@@ -11,6 +14,14 @@ const Workspace = () => {
     const [workspaces, setWorkspaces] = useState([]);
     const [selectedWorkspace, setSelectedWorkspace] = useState(null);
     const [showDropdown, setShowDropdown] = useState(false);
+
+    //folder states
+    const [folders, setFolders] = useState([]);
+    const [selectedFolder, setSelectedFolder] = useState(null);
+    const [showCreateFolderPopup, setShowCreateFolderPopup] = useState(false);
+
+    //form states
+    const [forms, setForms] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
@@ -23,9 +34,28 @@ const Workspace = () => {
         getData()
     }, []);
 
+    useEffect(() => {
+        const getFolderData = async () => {
+            const res = await getAllFoldersInWorkspace(selectedWorkspace?._id)
+            if (res.status == 200) {
+                setFolders(res.data.folders)
+            }
+        }
+        if (selectedWorkspace) {
+            getFolderData()
+        }
+    }, [selectedWorkspace]);
+
+
+
     const toggleTheme = () => {
         setIsDark(!isDark);
         onToggle && onToggle(!isDark);
+    }
+
+    const logOut = () => {
+        localStorage.removeItem('token')
+        navigate('/login')
     }
 
     function onWorkspaceClick(workspace) {
@@ -41,11 +71,11 @@ const Workspace = () => {
                 </div>
                 {showDropdown && (
                     <div className={styles.dropdownContent}>
-                        {workspaces && workspaces.map((workspace) => (
-                            <div key={workspace.id} onClick={() => { onWorkspaceClick(workspace) }}>{workspace.name}</div>
+                        {workspaces && workspaces.map((workspace, index) => (
+                            <div key={`workspace-${index}`} onClick={() => { onWorkspaceClick(workspace) }}>{workspace.name}</div>
                         ))}
                         <div onClick={() => { navigate('/settings') }}>Settings</div>
-                        <div onClick={() => { navigate('/login') }} style={{ color: '#FFA54C', border: 'none'}}>Logout</div>
+                        <div onClick={() => { logOut() }} style={{ color: '#FFA54C', border: 'none' }}>Log Out</div>
                     </div>
                 )}
 
@@ -67,6 +97,24 @@ const Workspace = () => {
             </div>
         )
     }
+
+    const folderItem = (folder) => {
+        function selectFolder() {
+            console.log(folder)
+            setSelectedFolder(folder)
+        }
+        return (
+            <div
+                className={styles.folderItem}
+                onClick={selectFolder}
+                style={folder?._id === selectedFolder?._id ? { backgroundColor: '#D9D9D9', color: '#000' } : {}}
+            >
+                <p>{folder?.name}</p>
+                <RiDeleteBin6Line className={styles.deleteIcon} />
+            </div>
+        )
+    }
+
     return (
         <div className={styles.container}>
             {/* Header Section */}
@@ -74,7 +122,7 @@ const Workspace = () => {
                 <div className={styles.headerDiv}></div>
                 {/* make a drop down */}
                 <div className={styles.headerDiv}>
-                <WorkspaceDropDown />
+                    <WorkspaceDropDown />
                 </div>
                 {/* theme toggler */}
                 <div className={styles.headerDiv}>
@@ -83,7 +131,20 @@ const Workspace = () => {
                     <button className={styles.shareButton} onClick={() => { navigate('/login') }}>Share</button>
                 </div>
             </div>
-            <div> Workspace</div>
+            <div className={styles.main}>
+                <div className={styles.folderContainer}>
+                    <div
+                        className={styles.folderItem}
+                        onClick={() => { setShowCreateFolderPopup(true) }}
+
+                    >
+                        <HiOutlineFolderAdd className={styles.folderIcon} />
+                        <p>Create a Folder</p>
+                    </div>
+                    {folders && folders.map((folder, index) => folderItem(folder))}
+                </div>
+                <div className={styles.formContainer}></div>
+            </div>
         </div>
     );
 };

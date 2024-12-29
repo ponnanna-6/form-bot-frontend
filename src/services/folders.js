@@ -40,18 +40,18 @@ export const getFolder = async (data) => {
   }
 };
 
-export const getAllFoldersInWorkspace = async (data) => {
+export const getAllFoldersInWorkspace = async (workspaceId) => {
   try {
     //data = {workspaceId}
     const id = getIdFromToken()
     const headers = addTokenToHeader({headers:{}})
     if(headers) {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/folder/${data.workspaceId}`, 
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/folder/${workspaceId}`, 
         {headers}
       );
       return {
         status: res?.status,
-        data: res?.data[0]
+        data: res?.data
       };
     }
   } catch (error) {
