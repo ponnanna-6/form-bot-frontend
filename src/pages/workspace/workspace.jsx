@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import { alertToast, errorToast } from "../../components/helper/toast";
 import DeleteFolderPopUp from "../../components/popups/deleteProjectPopUp";
 import SharePopup from "../../components/popups/shareWorkspacePopup";
-import { addForm, getAllFormsInWorkspace } from "../../services/form";
+import { addForm, deleteform, getAllFormsInWorkspace } from "../../services/form";
 
 const Workspace = () => {
     const navigate = useNavigate()
@@ -36,6 +36,7 @@ const Workspace = () => {
 
     //share states
     const [showSharePopup, setShowSharePopup] = useState(false);
+
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);
         return () => {
@@ -55,7 +56,6 @@ const Workspace = () => {
     }, []);
 
     useEffect(() => {
-        console.log("refreshing data")
         const getFolderData = async () => {
             const res = await getAllFoldersInWorkspace(selectedWorkspace?._id)
             if (res.status == 200) {
@@ -70,8 +70,7 @@ const Workspace = () => {
 
     useEffect(() => {
         const getFormData = async () => {
-            const res = await getAllFormsInWorkspace(selectedWorkspace?._id, selectedFolder?._id)
-            console.log(res)
+            const res = await getAllFormsInWorkspace(selectedWorkspace?._id, selectedFolder ? selectedFolder?._id : "root")
             if (res.status == 200) {
                 setForms(res.data.forms)
             }
@@ -79,7 +78,7 @@ const Workspace = () => {
         if (selectedWorkspace) {
             getFormData()
         }
-    }, [selectedFolder]);
+    }, [selectedWorkspace, selectedFolder, refreshData]);
 
     const dropdownRef = useRef(null);
 
@@ -150,8 +149,8 @@ const Workspace = () => {
     }
 
     const deleteFormOnClick = async () => {
-        setShowDeleteFolderPopup(false)
-        const res = await deleteFolder({ folderId: selectedFolder?._id })
+        setShowDeleteFormPopup(false)
+        const res = await deleteform(selectForm?._id)
         if (res.status == 200) {
             alertToast(res.message)
             setRefreshData(!refreshData)
@@ -165,8 +164,9 @@ const Workspace = () => {
         setShowDeleteFolderPopup(false)
         setShowCreateFormPopup(false)
         setShowDeleteFormPopup(false)
+        setSelectForm(null)
     }
-    
+
     const folderItem = (folder) => {
         function selectFolder() {
             setSelectedFolder(folder)
@@ -191,11 +191,17 @@ const Workspace = () => {
     const formItem = (form) => {
         return (
             <div
+                key={`form-${form?._id}`}
                 className={styles.formItem}
-            >                
+                onClick={() => { navigate(`/form/${form?._id}`) }}
+            >
                 <RiDeleteBin6Line
                     className={styles.deleteIconForm}
-                    onClick={() => { setShowDeleteFormPopup(true) }}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        setShowDeleteFormPopup(true);
+                        setSelectForm(form)
+                    }}
                 />
                 <p>{form?.name}</p>
 
@@ -209,11 +215,12 @@ const Workspace = () => {
         if (res.status == 200) {
             alertToast(res.message)
             setRefreshData(!refreshData)
+        } else {
+            errorToast(res.message)
         }
     }
 
     const onCreateForm = async (folderName) => {
-        console.log("HERE")
         setShowCreateFormPopup(true)
         const res = await addForm(folderName, selectedWorkspace?._id, selectedFolder?._id)
         if (res.status == 200) {

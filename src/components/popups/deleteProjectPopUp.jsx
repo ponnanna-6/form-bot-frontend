@@ -7,7 +7,7 @@ const DeleteFolderPopUp = ({ onClose, onConfirm, folder}) => {
     return (
         <div className={styles.overlay}>
             <div className={styles.popup}>
-                <h2>Are you sure you want to delete this folder?</h2>
+                <h2>Are you sure you want to delete this {folder ? 'folder' : 'form'}?</h2>
                 <div className={styles.buttonContainer}>
                     <button onClick={onConfirm} className={styles.doneButton}>Confirm</button>
                     <button onClick={onClose} className={styles.cancelButton}>Cancel</button>

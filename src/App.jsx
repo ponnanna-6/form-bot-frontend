@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Register, Login, Home, Settings, Workspace} from './pages'
+import { Register, Login, Home, Settings, Workspace, FormSetup} from './pages'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -13,6 +13,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/settings' element={<Settings />} />
+        <Route path='/form/:id' element={<FormSetup />} />
       </Routes>
       <ToastContainer
         limit={1}

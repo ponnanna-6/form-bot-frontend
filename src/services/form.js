@@ -42,14 +42,11 @@ export const getAllFormsInWorkspace = async (workspaceId, folderId) => {
   }
 };
 
-export const deleteFolder = async (data) => {
+export const deleteform = async (formId) => {
   try {
-    //data = {folderId}
-    const id = getIdFromToken()
     const headers = addTokenToHeader({headers:{}})
-    console.log(data.folderId)
     if(headers) {
-      const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/folder/${data.folderId}`, 
+      const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, 
         {headers}
       );
       return {
