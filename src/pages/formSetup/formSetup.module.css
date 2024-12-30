@@ -279,3 +279,45 @@
 .deleteIcon:hover {
     color: darkred;
 }
+
+/* Response style */
+
+.responseContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.responseStats {
+    display: flex;
+    flex-direction: row;
+    color: #fff;
+    align-items: center;
+    padding: 30px 30px;
+    border: 1px solid #27272A;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px;
+    justify-content: space-evenly;
+}
+
+.statBox {
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+    background-color: #323232;
+    align-items: flex-start;
+    padding: 20px 30px;
+    border-radius: 8px;
+    gap: 10px;
+    cursor: pointer;
+    margin: 10px;
+    width: 200px;
+    font-weight: 500;
+}
+
+.pieChart {
+    height: 250px;
+    width: 250px;
+}

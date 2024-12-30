@@ -13,6 +13,7 @@ import { FaRegStar } from "react-icons/fa";
 import { TiInputChecked } from "react-icons/ti";
 import { HiFlag } from "react-icons/hi";
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { PieChart } from 'react-minimal-pie-chart';
 
 const FormSetup = () => {
     // theme toggler
@@ -111,6 +112,15 @@ const FormSetup = () => {
         )
     }
 
+    const StatBox = (label, value) => {
+        return (
+            <div className={styles.statBox}>
+                <p>{label}</p>
+                <p>{value}</p>
+            </div>
+        )
+    }
+
     return (
         <div className={styles.container}>
             {/* Header Section */}
@@ -158,28 +168,55 @@ const FormSetup = () => {
                 </div>
             </div>
             {/* Main Section */}
-            <div className={styles.main}>
-                <div className={styles.formOptionsContainer}>
-                    <h3>Bubbles</h3>
-                    <div className={styles.bubbleContainer}>
-                        {bubbleOptions.map((item) => OptionItem(item, "bubble"))}
+            {flowSelected ?
+                <div className={styles.main}>
+                    <div className={styles.formOptionsContainer}>
+                        <h3>Bubbles</h3>
+                        <div className={styles.bubbleContainer}>
+                            {bubbleOptions.map((item) => OptionItem(item, "bubble"))}
+                        </div>
+                        <h3>Inputs</h3>
+                        <div className={styles.inputsContainer}>
+                            {inputOptions.map((item) => OptionItem(item, "input"))}
+                        </div>
                     </div>
-                    <h3>Inputs</h3>
-                    <div className={styles.inputsContainer}>
-                        {inputOptions.map((item) => OptionItem(item, "input"))}
+                    <div className={styles.formContainer}>
+                        <div className={styles.startItem}>
+                            <div className={styles.iconWrapper}><HiFlag /></div>
+                            <p>Start</p>
+                        </div>
+                        {formArray &&
+                            formArray.map((item, index) =>
+                                <div key={`item-${index}`}>{InputItem(item.option, item.from, index)}</div>
+                            )}
                     </div>
                 </div>
-                <div className={styles.formContainer}>
-                    <div className={styles.startItem}>
-                        <div className={styles.iconWrapper}><HiFlag /></div>
-                        <p>Start</p>
+                :
+                <div className={styles.responseContainer}>
+                    <div className={styles.responseStats}>
+                        {StatBox("Views", "0")}
+                        {StatBox("Starts", "0")}
                     </div>
-                    {formArray &&
-                        formArray.map((item, index) =>
-                            <div key={`item-${index}`}>{InputItem(item.option, item.from, index)}</div>
-                        )}
+                    <div className={styles.responseTable}>
+                    </div>
+                    <div className={styles.responseStats}>
+                        <PieChart
+                            data={[
+                                { title: 'Completed', value: 10, color: '#3B82F6' },
+                                { title: '', value: 15, color: '#909090' },
+                            ]}
+                            lineWidth={15}
+                            className={styles.pieChart}
+                            label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}%`}
+                            labelStyle={{
+                                fontSize: '5px',
+                                fontFamily: 'sans-serif',
+                            }}
+                        />
+                        {StatBox("Completion rate", "0")}
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     )
 }
