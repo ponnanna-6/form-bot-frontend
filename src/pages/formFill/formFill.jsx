@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom";
-import { getFormById } from "../../services/form";
+import { getFormById, getFormByIdForPublic, updateFormResponse } from "../../services/form";
 import styles from "./formFill.module.css"
 import { AiOutlineSend } from "react-icons/ai";
 import { alertToast, errorToast } from "../../helper/toast";
@@ -14,12 +14,13 @@ const FormFill = () => {
     const [visibleItems, setVisibleItems] = useState([]);
     const [currentInput, setCurrentInput] = useState("");
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [responses, setResponses] = useState({});
     const [rating, setRating] = useState(0);
+
+    const [disabled, setDisabled] = useState(false);
 
     useEffect(() => {
         const getFormData = async () => {
-            const res = await getFormById(formId)
+            const res = await getFormByIdForPublic(formId)
             if (res.status == 200) {
                 setFormArray(res.data.form.formData)
             } else {
@@ -29,11 +30,65 @@ const FormFill = () => {
         getFormData();
     }, [])
 
+    useEffect(() => {
+        if (formArray.length && visibleItems.length == 0) {
+            showNextItems();
+        }
+    }, [formArray]);
+
+    const showNextItems = () => {
+        let nextIndex = currentIndex;
+        const newVisibleItems = [];
+
+        while (nextIndex < formArray.length && formArray[nextIndex].from === "bubble") {
+            newVisibleItems.push(formArray[nextIndex]);
+            nextIndex++;
+        }
+
+        if (nextIndex < formArray.length && formArray[nextIndex].from === "input") {
+            newVisibleItems.push(formArray[nextIndex]);
+            nextIndex++;
+        }
+
+        setVisibleItems([...visibleItems, ...newVisibleItems]);
+        setCurrentIndex(nextIndex);
+    };
+
+    const sendItem = () => {
+        setVisibleItems((prevItems) => {
+            const updatedItems = [...prevItems];
+            if (updatedItems.length > 0) {
+                updatedItems[updatedItems.length - 1].option.value = currentInput;
+            }
+            return updatedItems;
+        });
+        setCurrentInput("");
+        showNextItems();
+    }
+
+    const SendButton = () => {
+        return (
+            <button onClick={() => sendItem()}>
+                <AiOutlineSend fontSize={20} color={"#fff"} />
+            </button>
+        )
+    }
+
+    const onSubmitForm = async () => {
+        const res = await updateFormResponse(formId, visibleItems);
+        if (res.status == 200) {
+            setDisabled(true);
+            alertToast("Form submitted successfully");
+        } else {
+            errorToast(res.message)
+        }
+    }
+
     return (
         <div className={styles.container}>
-            {formArray.map((item, index) => {
+            {visibleItems.map((item, index) => {
                 return (
-                    <div key={index} className={`${styles.chatItem} ${item.from === "input" 
+                    <div key={index} className={`${styles.chatItem} ${item.from === "input"
                         ? item.option.type === "button"
                             ? styles.centerAlign
                             : styles.rightAlign
@@ -50,13 +105,11 @@ const FormFill = () => {
                             item.option.type == "rating" ? (
                                 <div className={styles.inputItem}>
                                     <RatingComponent onRate={setRating} />
-                                    <button>
-                                        <AiOutlineSend fontSize={20} color={"#fff"} />
-                                    </button>
+                                    <SendButton />
                                 </div>
                             ) : item.option.type == "button" ? (
                                 <div className={styles.inputItem}>
-                                    <button>
+                                    <button onClick={onSubmitForm} disabled={disabled} style={disabled ? { opacity: 0.5 } : {}}>
                                         Submit
                                     </button>
                                 </div>
@@ -65,10 +118,9 @@ const FormFill = () => {
                                     <input
                                         type={item.option.type}
                                         placeholder={item.option?.placeholder}
+                                        onChange={(e) => { setCurrentInput(e.target.value) }}
                                     />
-                                    <button>
-                                        <AiOutlineSend fontSize={20} color={"#fff"} />
-                                    </button>
+                                    <SendButton />
                                 </div>
                             )
                         )}

@@ -88,6 +88,29 @@ export const getFormById = async (formId) => {
   }
 }
 
+export const getFormByIdForPublic = async (formId) => {
+  try {
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/form/public/share/access/${formId}`,
+        { headers }
+      );
+      return {
+        status: res?.status,
+        data: res?.data
+      };
+    }
+  } catch (error) {
+    if (error.response) {
+      console.log("Error Response:", error.response.data);
+    }
+    return {
+      status: error.status,
+      message: error.response.data.message
+    };
+  }
+}
+
 export const updateFormData = async (formId, formData) => {
   try {
     const headers = addTokenToHeader({ headers: {} })
@@ -102,6 +125,29 @@ export const updateFormData = async (formId, formData) => {
     }
   } catch (error) {
     console.log(error)
+    if (error.response) {
+      console.log("Error Response:", error.response.data);
+    }
+    return {
+      status: error.status,
+      message: error.response.data.message
+    };
+  }
+}
+
+export const updateFormResponse = async (formId, formData) => {
+  try {
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}/response`, {data: formData},
+        { headers }
+      );
+      return {
+        status: res?.status,
+        message: res?.data.message
+      };
+    }
+  } catch (error) {
     if (error.response) {
       console.log("Error Response:", error.response.data);
     }

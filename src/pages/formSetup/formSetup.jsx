@@ -75,15 +75,14 @@ const FormSetup = () => {
         )
     }
 
-
     function onBubbleSelect(option, from) {
-        if(buttonAdded) {
+        if (buttonAdded || formArray[formArray.length - 1].option.type == "button") {
             alertToast("Other items cannot be added after button")
             return
         }
 
-        if(option.type === "button") {
-            if(!buttonAdded) {
+        if (option.type === "button") {
+            if (!buttonAdded) {
                 setButtonAdded(true)
             } else {
                 alertToast("Only one button is allowed")
@@ -98,7 +97,7 @@ const FormSetup = () => {
     }
 
     function deleteInput(index) {
-        if(formArray[index].option.type === "button") {
+        if (formArray[index].option.type === "button") {
             setButtonAdded(false)
         }
         formArray.splice(index, 1);
@@ -152,11 +151,10 @@ const FormSetup = () => {
     }
 
     const onSave = async () => {
-        console.log(formArray[formArray.length - 1].option.type)
-        if(!formArray.length) {
+        if (!formArray.length) {
             alertToast("Please add at least one input")
             return
-        } else if(formArray[formArray.length - 1].option.type != "button") {
+        } else if (formArray[formArray.length - 1].option.type != "button") {
             alertToast("Please add a button")
             return
         }
@@ -197,6 +195,39 @@ const FormSetup = () => {
         }
     };
 
+    const ResponsePage = () => {
+        return (
+            formData?.formResponse.length
+                ? <div className={styles.responseContainer}>
+                    <div className={styles.responseStats}>
+                        {StatBox("Views", formData?.viewCount || 0)}
+                        {StatBox("Starts", formData?.submitCount || 0)}
+                    </div>
+                    <div className={styles.responseTable}>
+                    </div>
+                    <div className={styles.responseStats}>
+                        <PieChart
+                            data={[
+                                { title: 'Completed', value: formData?.submitCount, color: '#3B82F6' },
+                                { title: '', value: formData?.viewCount - formData?.submitCount, color: '#909090' },
+                            ]}
+                            lineWidth={15}
+                            className={styles.pieChart}
+                            label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}%`}
+                            labelStyle={{
+                                fontSize: '5px',
+                                fontFamily: 'sans-serif',
+                            }}
+                        />
+                        {StatBox("Completion rate", ((formData?.submitCount / formData?.viewCount) * 100).toFixed(2) + "%")}
+                    </div>
+                </div>
+                : <div className={styles.responseContainer}>
+                    No Response yet collected
+                </div>
+        )
+    }
+
     return (
         <div className={styles.container}>
             {/* Header Section */}
@@ -225,7 +256,7 @@ const FormSetup = () => {
                     {/* button */}
                     <button
                         className={styles.shareButton}
-                        onClick={() => {shareForm()}}
+                        onClick={() => { shareForm() }}
                     >
                         Share
                     </button>
@@ -267,31 +298,7 @@ const FormSetup = () => {
                             )}
                     </div>
                 </div>
-                :
-                <div className={styles.responseContainer}>
-                    <div className={styles.responseStats}>
-                        {StatBox("Views", "0")}
-                        {StatBox("Starts", "0")}
-                    </div>
-                    <div className={styles.responseTable}>
-                    </div>
-                    <div className={styles.responseStats}>
-                        <PieChart
-                            data={[
-                                { title: 'Completed', value: 10, color: '#3B82F6' },
-                                { title: '', value: 15, color: '#909090' },
-                            ]}
-                            lineWidth={15}
-                            className={styles.pieChart}
-                            label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}%`}
-                            labelStyle={{
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif',
-                            }}
-                        />
-                        {StatBox("Completion rate", "0")}
-                    </div>
-                </div>
+                : <ResponsePage />
             }
         </div>
     )
