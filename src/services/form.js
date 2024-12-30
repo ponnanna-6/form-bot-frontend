@@ -3,10 +3,10 @@ import { addTokenToHeader, getIdFromToken } from "../helper/utils";
 
 export const addForm = async (name, workspaceId, folderId) => {
   try {
-    const headers = addTokenToHeader({headers:{}})
-    const data = {name: name, workspaceId: workspaceId, folderId: folderId}
-    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/form/`, data, 
-      {headers});
+    const headers = addTokenToHeader({ headers: {} })
+    const data = { name: name, workspaceId: workspaceId, folderId: folderId }
+    const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/v1/form/`, data,
+      { headers });
     return {
       status: res.status,
       message: res.data.message
@@ -21,10 +21,10 @@ export const addForm = async (name, workspaceId, folderId) => {
 
 export const getAllFormsInWorkspace = async (workspaceId, folderId) => {
   try {
-    const headers = addTokenToHeader({headers:{}})
-    if(headers) {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${workspaceId}/${folderId}`, 
-        {headers}
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${workspaceId}/${folderId}`,
+        { headers }
       );
       return {
         status: res?.status,
@@ -44,10 +44,10 @@ export const getAllFormsInWorkspace = async (workspaceId, folderId) => {
 
 export const deleteform = async (formId) => {
   try {
-    const headers = addTokenToHeader({headers:{}})
-    if(headers) {
-      const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, 
-        {headers}
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.delete(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`,
+        { headers }
       );
       return {
         status: res?.status,
@@ -67,10 +67,10 @@ export const deleteform = async (formId) => {
 
 export const getFormById = async (formId) => {
   try {
-    const headers = addTokenToHeader({headers:{}})
-    if(headers) {
-      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, 
-        {headers}
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.get(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`,
+        { headers }
       );
       return {
         status: res?.status,
@@ -85,5 +85,28 @@ export const getFormById = async (formId) => {
       status: error.status,
       message: error.response.data.message
     };
-  } 
+  }
+}
+
+export const updateFormData = async (formiId, data) => {
+  try {
+    const headers = addTokenToHeader({ headers: {} })
+    if (headers) {
+      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formiId}`, data,
+        { headers }
+      );
+      return {
+        status: res?.status,
+        message: res?.data.message
+      };
+    }
+  } catch (error) {
+    if (error.response) {
+      console.log("Error Response:", error.response.data);
+    }
+    return {
+      status: error.status,
+      message: error.response.data.message
+    };
+  }
 }

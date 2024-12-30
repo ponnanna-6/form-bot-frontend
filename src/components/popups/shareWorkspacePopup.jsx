@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './popup.module.css'; // Replace with your actual CSS file
-import { alertToast, errorToast } from '../helper/toast';
+import { alertToast, errorToast } from '../../helper/toast';
 import { validateEmail } from '../../helper/utils';
 import { shareWorkspace } from '../../services/workspace';
 

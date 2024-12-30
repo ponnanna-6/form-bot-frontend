@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './popup.module.css'; // Replace with your actual CSS file
-import { errorToast } from '../helper/toast';
+import { errorToast } from '../../helper/toast';
 
 const CreateFolderPopup = ({ onClose, onCreate, folder}) => {
     const [folderName, setFolderName] = useState('');

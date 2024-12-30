@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
-import { getFormById } from "../../services/form"
+import { getFormById, updateFormData } from "../../services/form"
 import styles from "./formSetup.module.css"
 import { FiMessageSquare } from "react-icons/fi";
 import { CiImageOn } from "react-icons/ci";
@@ -119,6 +119,13 @@ const FormSetup = () => {
                 <p>{value}</p>
             </div>
         )
+    }
+
+    const onSave = async () => {
+        const res = await updateFormData(formId, formArray)
+        if (res.status == 200) {
+            toast(res.message)
+        }
     }
 
     return (

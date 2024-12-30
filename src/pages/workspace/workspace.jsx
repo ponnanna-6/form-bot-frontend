@@ -9,7 +9,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { HiOutlineFolderAdd } from "react-icons/hi";
 import CreateFolderPopup from "../../components/popups/createProjectPopup";
 import { toast } from "react-toastify";
-import { alertToast, errorToast } from "../../components/helper/toast";
+import { alertToast, errorToast } from "../../helper/toast";
 import DeleteFolderPopUp from "../../components/popups/deleteProjectPopUp";
 import SharePopup from "../../components/popups/shareWorkspacePopup";
 import { addForm, deleteform, getAllFormsInWorkspace } from "../../services/form";
