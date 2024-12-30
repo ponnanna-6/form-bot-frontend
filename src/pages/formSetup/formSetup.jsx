@@ -11,6 +11,8 @@ import { FiPhone } from "react-icons/fi";
 import { MdOutlineDateRange } from "react-icons/md";
 import { FaRegStar } from "react-icons/fa";
 import { TiInputChecked } from "react-icons/ti";
+import { HiFlag } from "react-icons/hi";
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 const FormSetup = () => {
     // theme toggler
@@ -21,21 +23,23 @@ const FormSetup = () => {
     // flow and response toggle
     const [flowSelected, setFlowSelected] = useState(true);
 
+    const [formArray, setFormArray] = useState([]);
 
+    console.log(formArray)
     //Bubble options
     const bubbleOptions = [
-        { id: 1, name: "Text", image: <FiMessageSquare /> },
-        { id: 2, name: "Image", image: <CiImageOn /> },
+        { id: 1, name: "Text", image: <FiMessageSquare />, hint: "Click to Enter Text" },
+        { id: 2, name: "Image", image: <CiImageOn />, hint: "Click to add a link" },
     ];
 
     const inputOptions = [
-        { id: 1, name: "Text", image: <BiText /> },
-        { id: 2, name: "Number", image: <GoHash /> },
-        { id: 3, name: "Email", image: <MdAlternateEmail /> },
-        { id: 4, name: "Phone", image: <FiPhone /> },
-        { id: 5, name: "Date", image: <MdOutlineDateRange /> },
-        { id: 6, name: "Rating", image: <FaRegStar /> },
-        { id: 7, name: "Button", image: <TiInputChecked /> },
+        { id: 1, name: "Text", image: <BiText />, type: "text", hint: "User will input a text on this form" },
+        { id: 2, name: "Number", image: <GoHash />, type: "number", hint: "User will input a number on this form" },
+        { id: 3, name: "Email", image: <MdAlternateEmail />, type: "email", hint: "User will input an email on this form" },
+        { id: 4, name: "Phone", image: <FiPhone />, type: "tel", hint: "User will enter a phone number on this form" },
+        { id: 5, name: "Date", image: <MdOutlineDateRange />, type: "date", hint: "User will select a date" },
+        { id: 6, name: "Rating", image: <FaRegStar />, type: "range", hint: "User will tap to rate out of 5" },
+        { id: 7, name: "Button", image: <TiInputChecked />, type: "button", hint: "Submit" },
     ];
 
     useEffect(() => {
@@ -68,11 +72,41 @@ const FormSetup = () => {
         )
     }
 
+
+    function onBubbleSelect(option, from) {
+        setFormArray([
+            ...formArray,
+            { option: option, from: from }
+        ]);
+    }
+
+    function deleteInput(index) {
+        formArray.splice(index, 1);
+        setFormArray([...formArray]);
+    }
+
+
     const OptionItem = (option, from) => {
         return (
-            <div className={styles.bubble} key={option.id}>
+            <div className={styles.bubble} key={option.id} onClick={() => onBubbleSelect(option, from)}>
                 <div className={styles.iconWrapper} style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}>{option.image}</div>
                 <p>{option.name}</p>
+            </div>
+        )
+    }
+
+    const InputItem = (option, from, index) => {
+        return (
+            <div className={styles.inputItem} key={option.id}>
+                <div className={styles.deleteIconWrapper}>
+                    <RiDeleteBin6Line
+                        className={styles.deleteIcon}
+                        onClick={() => { deleteInput(index) }}
+                    />
+                </div>
+                <h4>{option.name}</h4>
+                {from == "bubble" && <input type="text" placeholder={option.hint} />}
+                {from == "input" && <p>Hint: {option.hint}</p>}
             </div>
         )
     }
@@ -136,7 +170,14 @@ const FormSetup = () => {
                     </div>
                 </div>
                 <div className={styles.formContainer}>
-
+                    <div className={styles.startItem}>
+                        <div className={styles.iconWrapper}><HiFlag /></div>
+                        <p>Start</p>
+                    </div>
+                    {formArray &&
+                        formArray.map((item, index) =>
+                            <div key={`item-${index}`}>{InputItem(item.option, item.from, index)}</div>
+                        )}
                 </div>
             </div>
         </div>
