@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { getFormById, updateFormData } from "../../services/form"
 import styles from "./formSetup.module.css"
 import { FiMessageSquare } from "react-icons/fi";
@@ -14,8 +14,10 @@ import { TiInputChecked } from "react-icons/ti";
 import { HiFlag } from "react-icons/hi";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { PieChart } from 'react-minimal-pie-chart';
+import { alertToast, errorToast } from "../../helper/toast";
 
 const FormSetup = () => {
+    const navigate = useNavigate();
     // theme toggler
     const [isDark, setIsDark] = useState('light');
     const [formData, setFormData] = useState({})
@@ -23,32 +25,32 @@ const FormSetup = () => {
 
     // flow and response toggle
     const [flowSelected, setFlowSelected] = useState(true);
-
     const [formArray, setFormArray] = useState([]);
 
-    console.log(formArray)
+    const [buttonAdded, setButtonAdded] = useState(false);
+
     //Bubble options
     const bubbleOptions = [
-        { id: 1, name: "Text", image: <FiMessageSquare />, hint: "Click to Enter Text" },
-        { id: 2, name: "Image", image: <CiImageOn />, hint: "Click to add a link" },
+        { id: 1, name: "Text", image: "FiMessageSquare", hint: "Click to Enter Text", value: "" },
+        { id: 2, name: "Image", image: "CiImageOn", hint: "Click to add a link", value: "" },
     ];
 
     const inputOptions = [
-        { id: 1, name: "Text", image: <BiText />, type: "text", hint: "User will input a text on this form" },
-        { id: 2, name: "Number", image: <GoHash />, type: "number", hint: "User will input a number on this form" },
-        { id: 3, name: "Email", image: <MdAlternateEmail />, type: "email", hint: "User will input an email on this form" },
-        { id: 4, name: "Phone", image: <FiPhone />, type: "tel", hint: "User will enter a phone number on this form" },
-        { id: 5, name: "Date", image: <MdOutlineDateRange />, type: "date", hint: "User will select a date" },
-        { id: 6, name: "Rating", image: <FaRegStar />, type: "range", hint: "User will tap to rate out of 5" },
-        { id: 7, name: "Button", image: <TiInputChecked />, type: "button", hint: "Submit" },
+        { id: 1, name: "Text", image: "BiText", type: "text", hint: "User will input a text on this form", placeholder: "Enter your text" },
+        { id: 2, name: "Number", image: "GoHash", type: "number", hint: "User will input a number on this form", placeholder: "Enter a number" },
+        { id: 3, name: "Email", image: "MdAlternateEmail", type: "email", hint: "User will input an email on this form", placeholder: "Enter your email" },
+        { id: 4, name: "Phone", image: "FiPhone", type: "tel", hint: "User will enter a phone number on this form", placeholder: "Enter your phone number" },
+        { id: 5, name: "Date", image: "MdOutlineDateRange", type: "date", hint: "User will select a date", placeholder: "Select a date" },
+        { id: 6, name: "Rating", image: "FaRegStar", type: "rating", hint: "User will tap to rate out of 5" },
+        { id: 7, name: "Button", image: "TiInputChecked", type: "button", hint: "Submit" },
     ];
 
     useEffect(() => {
         const getFormData = async () => {
             const res = await getFormById(formId)
-            console.log(res)
             if (res.status == 200) {
                 setFormData(res.data.form)
+                setFormArray(res.data.form.formData)
             }
         }
         getFormData();
@@ -75,6 +77,20 @@ const FormSetup = () => {
 
 
     function onBubbleSelect(option, from) {
+        if(buttonAdded) {
+            alertToast("Other items cannot be added after button")
+            return
+        }
+
+        if(option.type === "button") {
+            if(!buttonAdded) {
+                setButtonAdded(true)
+            } else {
+                alertToast("Only one button is allowed")
+                return
+            }
+        }
+
         setFormArray([
             ...formArray,
             { option: option, from: from }
@@ -82,6 +98,9 @@ const FormSetup = () => {
     }
 
     function deleteInput(index) {
+        if(formArray[index].option.type === "button") {
+            setButtonAdded(false)
+        }
         formArray.splice(index, 1);
         setFormArray([...formArray]);
     }
@@ -90,13 +109,17 @@ const FormSetup = () => {
     const OptionItem = (option, from) => {
         return (
             <div className={styles.bubble} key={option.id} onClick={() => onBubbleSelect(option, from)}>
-                <div className={styles.iconWrapper} style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}>{option.image}</div>
+                <div className={styles.iconWrapper} style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}>{renderIcon(option.image)}</div>
                 <p>{option.name}</p>
             </div>
         )
     }
 
     const InputItem = (option, from, index) => {
+        const handleInputChange = (e) => {
+            const updatedValue = e.target.value;
+            option.value = updatedValue;
+        };
         return (
             <div className={styles.inputItem} key={option.id}>
                 <div className={styles.deleteIconWrapper}>
@@ -106,7 +129,14 @@ const FormSetup = () => {
                     />
                 </div>
                 <h4>{option.name}</h4>
-                {from == "bubble" && <input type="text" placeholder={option.hint} />}
+                {from == "bubble" &&
+                    <input
+                        type="text"
+                        placeholder={option.hint}
+                        defaultValue={option.value || ""}
+                        onChange={handleInputChange}
+                    />
+                }
                 {from == "input" && <p>Hint: {option.hint}</p>}
             </div>
         )
@@ -122,11 +152,50 @@ const FormSetup = () => {
     }
 
     const onSave = async () => {
+        console.log(formArray[formArray.length - 1].option.type)
+        if(!formArray.length) {
+            alertToast("Please add at least one input")
+            return
+        } else if(formArray[formArray.length - 1].option.type != "button") {
+            alertToast("Please add a button")
+            return
+        }
         const res = await updateFormData(formId, formArray)
-        if (res.status == 200) {
-            toast(res.message)
+        if (res?.status == 200) {
+            alertToast(res.message)
+        } else {
+            errorToast(res.message)
         }
     }
+
+    const shareForm = async () => {
+        await navigator.clipboard.writeText(`${window.location.origin}/form/share/${formId}`);
+        alertToast("Link copied to clipboard!")
+    }
+    const renderIcon = (iconName) => {
+        switch (iconName) {
+            case "FiMessageSquare":
+                return <FiMessageSquare />;
+            case "CiImageOn":
+                return <CiImageOn />;
+            case "BiText":
+                return <BiText />;
+            case "GoHash":
+                return <GoHash />;
+            case "MdAlternateEmail":
+                return <MdAlternateEmail />;
+            case "MdOutlineDateRange":
+                return <MdOutlineDateRange />;
+            case "FaRegStar":
+                return <FaRegStar />;
+            case "FiPhone":
+                return <FiPhone />;
+            case "TiInputChecked":
+                return <TiInputChecked />;
+            default:
+                return null;
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -156,19 +225,19 @@ const FormSetup = () => {
                     {/* button */}
                     <button
                         className={styles.shareButton}
-                        onClick={() => { }}
+                        onClick={() => {shareForm()}}
                     >
                         Share
                     </button>
                     <button
                         className={styles.saveButton}
-                        onClick={() => { }}
+                        onClick={() => { onSave() }}
                     >
                         Save
                     </button>
                     <button
                         className={styles.closeButton}
-                        onClick={() => { }}
+                        onClick={() => { navigate('/') }}
                     >
                         X
                     </button>

@@ -88,11 +88,11 @@ export const getFormById = async (formId) => {
   }
 }
 
-export const updateFormData = async (formiId, data) => {
+export const updateFormData = async (formId, formData) => {
   try {
     const headers = addTokenToHeader({ headers: {} })
     if (headers) {
-      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formiId}`, data,
+      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, {data: formData},
         { headers }
       );
       return {
@@ -101,6 +101,7 @@ export const updateFormData = async (formiId, data) => {
       };
     }
   } catch (error) {
+    console.log(error)
     if (error.response) {
       console.log("Error Response:", error.response.data);
     }
