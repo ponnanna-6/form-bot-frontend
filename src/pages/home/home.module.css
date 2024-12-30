@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
+    padding: 30px 60px;
 }
 
 .logo {
@@ -24,8 +24,7 @@
 }
 
 .logoImage {
-    width: 20px;
-    height: 40px;
+    width: 30px;
     object-fit: contain;
 }
 
@@ -37,7 +36,7 @@
 .navButtons button {
     margin-left: 10px;
     padding: 10px 20px;
-    border-radius: 12px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
@@ -61,22 +60,40 @@
 
 .main {
     text-align: center;
-    padding: 100px 100px;
+}
+
+.titleContainer {
+    display: flex;
+    margin-bottom: 40px;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.titleContainer img {
+    object-fit: contain;
+}
+
+.triangleImage {
+    width: 200px;
+    object-fit: contain;
 }
 
 .title {
     font-size: 56px;
     font-weight: 800;
-    background: linear-gradient(90deg, #6c63ff, #0073ff);
+    background: linear-gradient(90deg, #6c63ff 0%, #0073ff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 20px;
+    width: 90%;
 }
 
 .subtitle {
     font-size: 20px;
-    color: #ccc;
-    margin-bottom: 40px;
+    color: #ffffff90;
+    font-weight: 500;
+    width: 80%;
+    text-align: center;
 }
 
 .ctaButton {
@@ -102,10 +119,32 @@
 }
 
 .previewImage {
+    position: relative;
     width: 100%;
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
 }
+
+.workflowPreview {
+    position: relative;
+    display: inline-block;
+}
+
+/* Shadow Effect */
+.workflowPreview::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    border-radius: 16px;
+    background: linear-gradient(90deg, orange, blue);
+    filter: blur(100px); /* Adjust the blur radius */
+    opacity: 0.8; /* Adjust the opacity for subtler effect */
+}
+
 
 .footer {
     background-color: #0d0d0d;

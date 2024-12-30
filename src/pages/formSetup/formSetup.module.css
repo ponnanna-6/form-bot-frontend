@@ -1,0 +1,182 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0px;
+    border-bottom: 1px solid #D9D9D950;
+}
+
+.headerDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: #fff;
+    justify-content: space-evenly;
+    flex: 1;
+}
+
+.shareButton {
+    padding: 8px 16px;
+    background-color: var(--button-blue);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.saveButton {
+    padding: 8px 16px;
+    background-color: #4ADE80;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.closeButton {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #FF0000;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Theme toggle button styling */
+.toggleContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.toggleSwitch {
+    width: 50px;
+    height: 24px;
+    background-color: #ccc;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggleSwitch.dark {
+    background-color: #0073ff;
+}
+
+.toggleCircle {
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transition: transform 0.3s ease;
+}
+
+.toggleSwitch.dark .toggleCircle {
+    transform: translateX(26px);
+}
+
+/* Flow resoponse toggle styles */
+
+.flowButton, .responseButton{
+    padding: 8px 16px;
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.selectedButton {
+    border: 1.5px solid #7EA6FF;
+    color: #7EA6FF;
+}
+
+/* Name input style  */
+.formNameInput {
+    padding: 8px 16px;
+    background-color: #352d2d4e;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Main section */
+
+.main {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-color: #352d2d4e;
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.formOptionsContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 20px;
+    border: 1px solid #D9D9D950;
+    width: 350px;
+    border-radius: 8px;
+    background-color: #000;
+    height: 100vh;
+}
+
+.formOptionsContainer h3 {
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    text-align: left;
+}
+
+.bubbleContainer, .inputsContainer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.bubble {
+    display: flex;
+    flex-direction: row;
+    width: 140px;
+    color: #fff;
+    background-color: #1F1F23;
+    align-items: flex-start;
+    padding: 10px 10px;
+    border: 1px solid #27272A;
+    border-radius: 8px;
+    gap: 10px;
+    cursor: pointer;
+}
+
+
+.iconWrapper {
+    display: flex;
+    font-size: 20px;
+}
+
+.bubble:hover .iconWrapper{
+    font-size: 24px;
+}

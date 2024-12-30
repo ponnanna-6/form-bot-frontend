@@ -3,36 +3,43 @@ import styles from "./home.module.css";
 import desktop from "../../assets/firstDesktop.png";
 import logo from '../../assets/logo.png';
 import { useNavigate } from "react-router-dom";
-
+import triangle from '../../assets/triangle.png'
+import rightCircle from '../../assets/rightCircle.png'
 const Home = () => {
     const navigate = useNavigate()
     function LogoImage() {
-      return (
-        <div className={styles.logo}>
-          <img src={logo} alt="Logo" className={styles.logoImage} />
-          FormBot
-        </div>
-      );
+        return (
+            <div className={styles.logo}>
+                <img src={logo} alt="Logo" className={styles.logoImage} />
+                FormBot
+            </div>
+        );
     }
     return (
         <div className={styles.container}>
             {/* Header Section */}
             <header className={styles.header}>
-                <LogoImage/>
+                <LogoImage />
                 <div className={styles.navButtons}>
-                    <button className={styles.signInButton} onClick={() => {navigate('/login')}}>Sign in</button>
-                    <button className={styles.createButton} onClick={() => {navigate('/login')}}>Create a FormBot</button>
+                    <button className={styles.signInButton} onClick={() => { navigate('/login') }}>Sign in</button>
+                    <button className={styles.createButton} onClick={() => { navigate('/login') }}>Create a FormBot</button>
                 </div>
             </header>
 
             {/* Main Section */}
             <main className={styles.main}>
-                <h1 className={styles.title}>Build advanced chatbots visually</h1>
-                <p className={styles.subtitle}>
-                    Typebot gives you powerful blocks to create unique chat experiences.Embed them
-                    anywhere on your web/mobile apps and start collecting results like magic.
-                </p>
-                <button className={styles.ctaButton}>Create a FormBot for free</button>
+                <div className={styles.titleContainer}>
+                    <img src={triangle} alt="Triangle" className={styles.triangleImage} />
+                    <div style={{flex: 2, marginLeft: 20}}>
+                        <h1 className={styles.title}>Build advanced chatbots visually</h1>
+                        <p className={styles.subtitle}>
+                            Typebot gives you powerful blocks to create unique chat experiences.Embed them
+                            anywhere on your web/mobile apps and start collecting results like magic.
+                        </p>
+                    </div>
+                    <img src={rightCircle} alt="Right Circle" className={styles.rightCircleImage} />
+                </div>
+                <button className={styles.ctaButton} onClick={() => { navigate('/login') }}>Create a FormBot for free</button>
 
                 {/* Workflow Preview */}
                 <div className={styles.workflowPreview}>
@@ -43,7 +50,7 @@ const Home = () => {
             {/* Footer Section */}
             <footer className={styles.footer}>
                 <div>
-                    <LogoImage/>
+                    <LogoImage />
                     <p>Made with ❤️ by @Cuvette</p>
                 </div>
                 <div className={styles.footerLinks}>

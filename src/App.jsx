@@ -13,7 +13,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/settings' element={<Settings />} />
-        <Route path='/form/:id' element={<FormSetup />} />
+        <Route path='/form/:formId' element={<FormSetup />} />
       </Routes>
       <ToastContainer
         limit={1}
