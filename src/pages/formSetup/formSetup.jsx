@@ -15,6 +15,7 @@ import { HiFlag } from "react-icons/hi";
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import { PieChart } from 'react-minimal-pie-chart';
 import { alertToast, errorToast } from "../../helper/toast";
+import FormResponseTable from "../../components/formResponseTable/formResponseTable";
 
 const FormSetup = () => {
     const navigate = useNavigate();
@@ -218,6 +219,7 @@ const FormSetup = () => {
                         {StatBox("Starts", formData?.submitCount || 0)}
                     </div>
                     <div className={styles.responseTable}>
+                        <FormResponseTable data={formData} />
                     </div>
                     <div className={styles.responseStats}>
                         <PieChart

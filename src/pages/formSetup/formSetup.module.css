@@ -289,6 +289,13 @@
     width: 100%;
 }
 
+.responseTable {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
 .responseStats {
     display: flex;
     flex-direction: row;

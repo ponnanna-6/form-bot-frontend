@@ -58,7 +58,13 @@ const FormFill = () => {
         setVisibleItems((prevItems) => {
             const updatedItems = [...prevItems];
             if (updatedItems.length > 0) {
-                updatedItems[updatedItems.length - 1].option.value = currentInput;
+                if (updatedItems[updatedItems.length - 1].option.type === "rating") {
+                    updatedItems[updatedItems.length - 1].option.value = rating;
+                    updatedItems[updatedItems.length - 1].isSent = true;
+                } else {
+                    updatedItems[updatedItems.length - 1].option.value = currentInput;
+                    updatedItems[updatedItems.length - 1].isSent = true;
+                }
             }
             return updatedItems;
         });
@@ -115,12 +121,18 @@ const FormFill = () => {
                                 </div>
                             ) : (
                                 <div className={styles.inputItem}>
-                                    <input
-                                        type={item.option.type}
-                                        placeholder={item.option?.placeholder}
-                                        onChange={(e) => { setCurrentInput(e.target.value) }}
-                                    />
-                                    <SendButton />
+                                    {item.isSent ? (
+                                        <p>{item.option.value}</p>
+                                    ) : (
+                                        <>
+                                            <input
+                                                type={item.option.type}
+                                                placeholder={item.option?.placeholder}
+                                                onChange={(e) => setCurrentInput(e.target.value)}
+                                            />
+                                            <SendButton />
+                                        </>
+                                    )}
                                 </div>
                             )
                         )}
