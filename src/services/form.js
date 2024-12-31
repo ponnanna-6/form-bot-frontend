@@ -111,11 +111,11 @@ export const getFormByIdForPublic = async (formId) => {
   }
 }
 
-export const updateFormData = async (formId, formData) => {
+export const updateFormData = async (formId, formName, formData) => {
   try {
     const headers = addTokenToHeader({ headers: {} })
     if (headers) {
-      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, {data: formData},
+      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/form/${formId}`, {data: formData, name: formName},
         { headers }
       );
       return {

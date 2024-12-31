@@ -21,6 +21,7 @@ const FormSetup = () => {
     // theme toggler
     const [isDark, setIsDark] = useState('light');
     const [formData, setFormData] = useState({})
+    const [formName, setFormName] = useState("")
     const { formId } = useParams();
 
     // flow and response toggle
@@ -51,6 +52,7 @@ const FormSetup = () => {
             if (res.status == 200) {
                 setFormData(res.data.form)
                 setFormArray(res.data.form.formData)
+                setFormName(res.data.form.name)
             }
         }
         getFormData();
@@ -76,7 +78,12 @@ const FormSetup = () => {
     }
 
     function onBubbleSelect(option, from) {
-        if (buttonAdded || formArray[formArray.length - 1].option.type == "button") {
+        if (buttonAdded) {
+            alertToast("Other items cannot be added after button")
+            return
+        }
+
+        if (formArray.length > 0 && formArray[formArray.length - 1].option.type == "button") {
             alertToast("Other items cannot be added after button")
             return
         }
@@ -108,7 +115,10 @@ const FormSetup = () => {
     const OptionItem = (option, from) => {
         return (
             <div className={styles.bubble} key={option.id} onClick={() => onBubbleSelect(option, from)}>
-                <div className={styles.iconWrapper} style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}>{renderIcon(option.image)}</div>
+                <div
+                    className={styles.iconWrapper}
+                    style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}
+                >{renderIcon(option.image)}</div>
                 <p>{option.name}</p>
             </div>
         )
@@ -158,7 +168,11 @@ const FormSetup = () => {
             alertToast("Please add a button")
             return
         }
-        const res = await updateFormData(formId, formArray)
+        if(formName.length == 0) {
+            alertToast("Please add a form name")
+            return
+        }
+        const res = await updateFormData(formId, formName, formArray)
         if (res?.status == 200) {
             alertToast(res.message)
         } else {
@@ -233,7 +247,13 @@ const FormSetup = () => {
             {/* Header Section */}
             <div className={styles.header}>
                 <div className={styles.headerDiv}>
-                    <input type="text" className={styles.formNameInput} placeholder="Enter Form Name" value={formData?.name} />
+                    <input
+                        type="text"
+                        className={styles.formNameInput}
+                        placeholder="Enter Form Name"
+                        value={formName}
+                        onChange={(e) => { setFormName(e.target.value) }}
+                    />
                 </div>
                 {/* Flow/response toggle */}
                 <div className={styles.headerDiv} style={{ justifyContent: "center" }}>
