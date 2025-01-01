@@ -16,6 +16,8 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import { PieChart } from 'react-minimal-pie-chart';
 import { alertToast, errorToast } from "../../helper/toast";
 import FormResponseTable from "../../components/formResponseTable/formResponseTable";
+import { getWorkspaceById } from "../../services/workspace";
+import { getIdFromToken } from "../../helper/utils";
 
 const FormSetup = () => {
     const navigate = useNavigate();
@@ -30,6 +32,8 @@ const FormSetup = () => {
     const [formArray, setFormArray] = useState([]);
 
     const [buttonAdded, setButtonAdded] = useState(false);
+
+    const [isViewOnly, setIsViewOnly] = useState(false);
 
     //Bubble options
     const bubbleOptions = [
@@ -51,9 +55,19 @@ const FormSetup = () => {
         const getFormData = async () => {
             const res = await getFormById(formId)
             if (res.status == 200) {
-                setFormData(res.data.form)
-                setFormArray(res.data.form.formData)
-                setFormName(res.data.form.name)
+                const workspaceId = res.data.form.workspace
+                const res2 = await getWorkspaceById(workspaceId)
+                if(res2.status == 200){
+                    const sharedUser = res2.data.workspace?.sharedWith.find((user) => user.user == getIdFromToken())
+                    if(getIdFromToken() != res2.data.workspace.owner && !sharedUser){
+                        setIsViewOnly(true)
+                    } else {
+                        setIsViewOnly(false)
+                    }
+                    setFormData(res.data.form)
+                    setFormArray(res.data.form.formData)
+                    setFormName(res.data.form.name)
+                }
             }
         }
         getFormData();
@@ -79,6 +93,10 @@ const FormSetup = () => {
     }
 
     function onBubbleSelect(option, from) {
+        if(isViewOnly) {
+            alertToast("You cannot edit this form")
+            return
+        }
         if (buttonAdded) {
             alertToast("Other items cannot be added after button")
             return
@@ -105,6 +123,9 @@ const FormSetup = () => {
     }
 
     function deleteInput(index) {
+        if (isViewOnly) {
+            return
+        }
         if (formArray[index].option.type === "button") {
             setButtonAdded(false)
         }
@@ -133,10 +154,10 @@ const FormSetup = () => {
         return (
             <div className={styles.inputItem} key={option.id}>
                 <div className={styles.deleteIconWrapper}>
-                    <RiDeleteBin6Line
+                    {!isViewOnly && <RiDeleteBin6Line
                         className={styles.deleteIcon}
                         onClick={() => { deleteInput(index) }}
-                    />
+                    />}
                 </div>
                 <h4>{option.name}</h4>
                 {from == "bubble" &&
@@ -144,7 +165,7 @@ const FormSetup = () => {
                         type="text"
                         placeholder={option.hint}
                         defaultValue={option.value || ""}
-                        onChange={handleInputChange}
+                        onChange={ !isViewOnly && handleInputChange}
                     />
                 }
                 {from == "input" && <p>Hint: {option.hint}</p>}
@@ -284,7 +305,8 @@ const FormSetup = () => {
                     </button>
                     <button
                         className={styles.saveButton}
-                        onClick={() => { onSave() }}
+                        onClick={() => {!isViewOnly && onSave() }}
+                        style={{ opacity: isViewOnly ? 0.5 : 1 }}
                     >
                         Save
                     </button>

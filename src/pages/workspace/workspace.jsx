@@ -66,6 +66,8 @@ const Workspace = () => {
             const res = await getAllFoldersInWorkspace(selectedWorkspace?._id)
             if (res.status == 200) {
                 setFolders(res.data.folders)
+            } else {
+                setFolders([])
             }
         }
 
@@ -75,6 +77,8 @@ const Workspace = () => {
                     const sharedUser = selectedWorkspace.sharedWith.find(user => user.user === getIdFromToken())
                     if (sharedUser.accessType === "view") {
                         setIsViewOnly(true)
+                    } else {
+                        setIsViewOnly(false)
                     }
                 }
             } else {
