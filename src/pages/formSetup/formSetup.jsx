@@ -59,7 +59,8 @@ const FormSetup = () => {
                 const res2 = await getWorkspaceById(workspaceId)
                 if(res2.status == 200){
                     const sharedUser = res2.data.workspace?.sharedWith.find((user) => user.user == getIdFromToken())
-                    if(getIdFromToken() != res2.data.workspace.owner && !sharedUser){
+                    
+                    if(getIdFromToken() != res2.data.workspace.owner && sharedUser?.accessType == "view") {
                         setIsViewOnly(true)
                     } else {
                         setIsViewOnly(false)
