@@ -13,6 +13,7 @@ import { alertToast, errorToast } from "../../helper/toast";
 import DeleteFolderPopUp from "../../components/popups/deleteProjectPopUp";
 import SharePopup from "../../components/popups/shareWorkspacePopup";
 import { addForm, deleteform, getAllFormsInWorkspace } from "../../services/form";
+import { getIdFromToken } from "../../helper/utils";
 
 const Workspace = () => {
     const navigate = useNavigate()
@@ -36,6 +37,7 @@ const Workspace = () => {
 
     //share states
     const [showSharePopup, setShowSharePopup] = useState(false);
+    const [isViewOnly, setIsViewOnly] = useState(false);
 
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);
@@ -48,12 +50,13 @@ const Workspace = () => {
         const getData = async () => {
             const res = await getAllWorkspaces()
             if (res.status == 200) {
+                console.log(res.data.workspaces)
                 setWorkspaces(res.data.workspaces)
                 setSelectedWorkspace(res.data.workspaces[0])
             }
         }
         const userLoggedIn = localStorage.getItem("token")
-        if(userLoggedIn){
+        if (userLoggedIn) {
             getData()
         }
     }, []);
@@ -67,6 +70,16 @@ const Workspace = () => {
         }
 
         if (selectedWorkspace) {
+            if (selectedWorkspace?.owner !== getIdFromToken()) {
+                if (selectedWorkspace.sharedWith.length > 0) {
+                    const sharedUser = selectedWorkspace.sharedWith.find(user => user.user === getIdFromToken())
+                    if (sharedUser.accessType === "view") {
+                        setIsViewOnly(true)
+                    }
+                }
+            } else {
+                setIsViewOnly(false)
+            }
             getFolderData()
         }
     }, [selectedWorkspace, refreshData]);
@@ -183,10 +196,10 @@ const Workspace = () => {
                 style={folder?._id === selectedFolder?._id ? { backgroundColor: '#D9D9D9', color: '#000' } : {}}
             >
                 <p>{folder?.name}</p>
-                <RiDeleteBin6Line
+                {!isViewOnly && <RiDeleteBin6Line
                     className={styles.deleteIcon}
                     onClick={() => { setShowDeleteFolderPopup(true) }}
-                />
+                />}
             </div>
         )
     }
@@ -198,14 +211,14 @@ const Workspace = () => {
                 className={styles.formItem}
                 onClick={() => { navigate(`/form/${form?._id}`) }}
             >
-                <RiDeleteBin6Line
+                {!isViewOnly && <RiDeleteBin6Line
                     className={styles.deleteIconForm}
                     onClick={(e) => {
                         e.stopPropagation();
                         setShowDeleteFormPopup(true);
                         setSelectForm(form)
                     }}
-                />
+                />}
                 <p>{form?.name}</p>
 
             </div>
@@ -234,6 +247,10 @@ const Workspace = () => {
         }
     }
 
+    const isViewOnlyAlert = () => {
+        alertToast("You only have view acess to this workspace")
+    }
+
     return (
         <div className={styles.container}>
             {/* Header Section */}
@@ -259,7 +276,7 @@ const Workspace = () => {
                 <div className={styles.folderContainer}>
                     <div
                         className={styles.folderItem}
-                        onClick={() => { setShowCreateFolderPopup(true) }}
+                        onClick={() => { isViewOnly ? isViewOnlyAlert() : setShowCreateFolderPopup(true) }}
                     >
                         <HiOutlineFolderAdd className={styles.folderIcon} />
                         <p>Create a Folder</p>
@@ -269,7 +286,7 @@ const Workspace = () => {
                 <div className={styles.formContainer}>
                     <div
                         className={styles.formItem}
-                        onClick={() => { setShowCreateFormPopup(true) }}
+                        onClick={() => { isViewOnly ? isViewOnlyAlert() : setShowCreateFormPopup(true) }}
                         style={{ backgroundColor: '#1A5FFF', border: 'none' }}
                     >
                         <p style={{ fontSize: '32px' }}>+</p>
