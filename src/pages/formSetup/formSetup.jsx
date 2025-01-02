@@ -247,7 +247,7 @@ const FormSetup = () => {
                     <div className={styles.responseStats}>
                         <div className={styles.pieChartContainer}>
                             <div className={styles.label}>
-                                <p>Completed: {formData?.submitCount}</p>
+                                <p style={isDark ? { color: "#fff" } : { color: "#000" }}>Completed: {formData?.submitCount}</p>
                             </div>
                             <PieChart
                                 data={[
@@ -263,7 +263,7 @@ const FormSetup = () => {
                     </div>
                 </div>
                 : <div className={styles.responseContainer}>
-                    No Response yet collected
+                    <h2 style={{textAlign: "center", padding: "200px"}}>No Response yet collected</h2>
                 </div>
         )
     }
