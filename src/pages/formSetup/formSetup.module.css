@@ -3,6 +3,14 @@
     flex-direction: column;
 }
 
+.containerLight {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #000;
+    min-height: 100vh;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -17,7 +25,6 @@
     align-items: center;
     gap: 10px;
     font-size: 12px;
-    color: #fff;
     justify-content: space-evenly;
     flex: 1;
 }
@@ -25,7 +32,6 @@
 .shareButton {
     padding: 8px 16px;
     background-color: var(--button-blue);
-    color: #fff;
     border: none;
     border-radius: 6px;
     font-weight: bold;
@@ -35,7 +41,6 @@
 .saveButton {
     padding: 8px 16px;
     background-color: #4ADE80;
-    color: #fff;
     border: none;
     border-radius: 6px;
     font-weight: bold;
@@ -59,7 +64,6 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: #fff;
 }
 
 .toggleSwitch {
@@ -97,7 +101,6 @@
 .responseButton {
     padding: 8px 16px;
     background-color: transparent;
-    color: #fff;
     border: none;
     border-radius: 6px;
     font-weight: bold;
@@ -113,7 +116,6 @@
 .formNameInput {
     padding: 8px 16px;
     background-color: #352d2d4e;
-    color: #fff;
     border: none;
     border-radius: 6px;
     font-weight: bold;
@@ -143,6 +145,20 @@
     border-radius: 8px;
     background-color: #000;
     height: 100vh;
+    color: #fff;
+}
+
+.formOptionsContainerLight {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 50px 20px;
+    border: 1px solid #D9D9D950;
+    width: 350px;
+    border-radius: 8px;
+    background-color: #fff;
+    height: 100vh;
+    color: #000;
 }
 
 .formOptionsContainer h3 {
@@ -164,7 +180,6 @@
     display: flex;
     flex-direction: row;
     width: 140px;
-    color: #fff;
     background-color: #1F1F23;
     align-items: flex-start;
     padding: 10px 10px;
@@ -174,6 +189,18 @@
     cursor: pointer;
 }
 
+.bubbleLight {
+    display: flex;
+    flex-direction: row;
+    width: 140px;
+    background-color: #fff;
+    align-items: flex-start;
+    padding: 10px 10px;
+    border: 1px solid #27272A;
+    border-radius: 8px;
+    gap: 10px;
+    cursor: pointer;
+}
 
 .iconWrapper {
     display: flex;
@@ -219,7 +246,6 @@
     display: flex;
     flex-direction: row;
     width: 300px;
-    color: #fff;
     background-color: #000;
     align-items: flex-start;
     padding: 10px 10px;
@@ -228,7 +254,7 @@
     gap: 10px;
     cursor: not-allowed;
     margin: 10px;
-
+    color: #fff;
 }
 
 .inputItem {
@@ -236,7 +262,6 @@
     flex-direction: column;
     position: relative;
     width: 300px;
-    color: #fff;
     background-color: #000;
     align-items: flex-start;
     padding: 10px 10px;
@@ -246,6 +271,7 @@
     gap: 10px;
     cursor: pointer;
     margin: 10px;
+    color: #fff;
 }
 
 .inputItem input {
@@ -253,7 +279,7 @@
     padding: 10px 10px 10px 15px;
     font-size: 14px;
     background: #1f1f23;
-    border: none;
+    border: 1px solid #1f1f23;
     border-radius: 6px;
 }
 

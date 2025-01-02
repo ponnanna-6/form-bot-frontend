@@ -17,7 +17,8 @@ import { getIdFromToken } from "../../helper/utils";
 
 const Workspace = () => {
     const navigate = useNavigate()
-    const [isDark, setIsDark] = useState('light');
+    console.log("---", localStorage.getItem('theme'))
+    const [isDark, setIsDark] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
     const [workspaces, setWorkspaces] = useState([]);
     const [selectedWorkspace, setSelectedWorkspace] = useState(null);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -109,7 +110,7 @@ const Workspace = () => {
     };
     const toggleTheme = () => {
         setIsDark(!isDark);
-        onToggle && onToggle(!isDark);
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
     }
 
     const logOut = () => {
@@ -213,6 +214,7 @@ const Workspace = () => {
             <div
                 key={`form-${form?._id}`}
                 className={styles.formItem}
+                style={!isDark ? { backgroundColor: '#D9D9D9', color: '#000' } : {}}
                 onClick={() => { navigate(`/form/${form?._id}`) }}
             >
                 {!isViewOnly && <RiDeleteBin6Line
@@ -256,7 +258,7 @@ const Workspace = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={isDark ? styles.container : styles.containerLight}>
             {/* Header Section */}
             <div className={styles.header}>
                 <div className={styles.headerDiv}></div>

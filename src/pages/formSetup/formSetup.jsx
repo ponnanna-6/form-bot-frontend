@@ -22,7 +22,7 @@ import { getIdFromToken } from "../../helper/utils";
 const FormSetup = () => {
     const navigate = useNavigate();
     // theme toggler
-    const [isDark, setIsDark] = useState('light');
+    const [isDark, setIsDark] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
     const [formData, setFormData] = useState({})
     const [formName, setFormName] = useState("")
     const { formId } = useParams();
@@ -76,7 +76,7 @@ const FormSetup = () => {
 
     const toggleTheme = () => {
         setIsDark(!isDark);
-        onToggle && onToggle(!isDark);
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
     }
     const ToggleContainer = () => {
         return (
@@ -137,7 +137,7 @@ const FormSetup = () => {
 
     const OptionItem = (option, from) => {
         return (
-            <div className={styles.bubble} key={option.id} onClick={() => onBubbleSelect(option, from)}>
+            <div className={isDark ? styles.bubble : styles.bubbleLight} key={option.id} onClick={() => onBubbleSelect(option, from)}>
                 <div
                     className={styles.iconWrapper}
                     style={{ color: from === "bubble" ? "#7EA6FF" : "#FFA54C" }}
@@ -153,7 +153,7 @@ const FormSetup = () => {
             option.value = updatedValue;
         };
         return (
-            <div className={styles.inputItem} key={option.id}>
+            <div className={styles.inputItem} key={option.id} style={!isDark ? { backgroundColor: "#fff", color: "#000" }: {}}>
                 <div className={styles.deleteIconWrapper}>
                     {!isViewOnly && <RiDeleteBin6Line
                         className={styles.deleteIcon}
@@ -167,6 +167,7 @@ const FormSetup = () => {
                         placeholder={option.hint}
                         defaultValue={option.value || ""}
                         onChange={!isViewOnly && handleInputChange}
+                        style = {!isDark ? { backgroundColor: "#fff", color: "#000" } : {}}
                     />
                 }
                 {from == "input" && <p>Hint: {option.hint}</p>}
@@ -235,7 +236,7 @@ const FormSetup = () => {
     const ResponsePage = () => {
         return (
             formData?.formResponse.length
-                ? <div className={styles.responseContainer}>
+                ? <div className={styles.responseContainer} style={!isDark ? { backgroundColor: "#fff", color: "#000" } : {}}>
                     <div className={styles.responseStats}>
                         {StatBox("Views", formData?.viewCount || 0)}
                         {StatBox("Starts", formData?.submitCount || 0)}
@@ -268,7 +269,7 @@ const FormSetup = () => {
     }
 
     return (
-        <div className={styles.container}>
+        <div className={isDark ? styles.container : styles.containerLight}>
             {/* Header Section */}
             <div className={styles.header}>
                 <div className={styles.headerDiv}>
@@ -284,12 +285,14 @@ const FormSetup = () => {
                 <div className={styles.headerDiv} style={{ justifyContent: "center" }}>
                     <button
                         className={`${styles.flowButton} ${flowSelected ? styles.selectedButton : ''}`}
+                        style={isDark ? { color: "white" } : {color: "black"}}
                         onClick={() => { setFlowSelected(true) }}
                     >
                         Flow
                     </button>
                     <button
                         className={`${styles.responseButton} ${!flowSelected ? styles.selectedButton : ''}`}
+                        style={isDark ? { color: "white" } : {color: "black"}}
                         onClick={() => { setFlowSelected(false) }}
                     >
                         Response
@@ -323,7 +326,9 @@ const FormSetup = () => {
             {/* Main Section */}
             {flowSelected ?
                 <div className={styles.main}>
-                    <div className={styles.formOptionsContainer}>
+                    <div
+                        className={isDark ? styles.formOptionsContainer : styles.formOptionsContainerLight}
+                    >
                         <h3>Bubbles</h3>
                         <div className={styles.bubbleContainer}>
                             {bubbleOptions.map((item) => OptionItem(item, "bubble"))}
@@ -334,7 +339,7 @@ const FormSetup = () => {
                         </div>
                     </div>
                     <div className={styles.formContainer}>
-                        <div className={styles.startItem}>
+                        <div className={styles.startItem} style={!isDark ? { color: "black", backgroundColor: "#fff" } : {}}>
                             <div className={styles.iconWrapper}><HiFlag /></div>
                             <p>Start</p>
                         </div>

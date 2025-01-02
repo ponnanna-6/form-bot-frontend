@@ -3,6 +3,14 @@
     flex-direction: column;
 }
 
+.containerLight {
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    color: #000;
+    min-height: 100vh;
+}
+
 .header {
     display: flex;
     flex-direction: row;
@@ -17,7 +25,6 @@
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    color: #fff;
     justify-content: space-evenly;
     flex: 1
 }
@@ -85,7 +92,6 @@
     align-items: center;
     gap: 8px;
     font-size: 14px;
-    color: #fff;
 }
 
 .toggleSwitch {
@@ -138,7 +144,7 @@
 }
 
 .folderItem:hover {
-    background-color: #000;
+    font-size: 16px;
 }
 
 .deleteIcon {
@@ -191,9 +197,5 @@
     position: relative;
     font-weight: 500;
     color: #ffffff90;
-}
-
-.formItem:hover {
-    color: #fff
 }
 
