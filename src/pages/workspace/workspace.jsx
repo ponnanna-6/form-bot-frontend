@@ -169,6 +169,7 @@ const Workspace = ({ setUserLoggedIn }) => {
         } else {
             alertToast(res.message)
         }
+        setSelectedFolder(null)
     }
 
     const deleteFormOnClick = async () => {
