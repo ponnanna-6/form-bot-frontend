@@ -257,6 +257,12 @@ const Workspace = () => {
         alertToast("You only have view acess to this workspace")
     }
 
+    const handleShareButtonClick = () => {
+        selectedWorkspace?.owner == getIdFromToken() 
+            ? setShowSharePopup(true) 
+            : alertToast("You are not the owner of this workspace")
+    };
+
     return (
         <div className={isDark ? styles.container : styles.containerLight}>
             {/* Header Section */}
@@ -272,7 +278,8 @@ const Workspace = () => {
                     {/* Share button */}
                     <button
                         className={styles.shareButton}
-                        onClick={() => { setShowSharePopup(true) }}
+                        onClick={() => { handleShareButtonClick() }}
+                        style={selectedWorkspace?.owner !== getIdFromToken() ? { opacity: 0.5 } : {}}
                     >
                         Share
                     </button>
@@ -316,6 +323,7 @@ const Workspace = () => {
             {showSharePopup &&
                 <SharePopup
                     onClose={() => { setShowSharePopup(false) }}
+                    workspaceId={selectedWorkspace?._id}
                 />}
         </div>
     );
