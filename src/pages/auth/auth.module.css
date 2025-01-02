@@ -1,81 +1,98 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 80vh;
 }
 
 .formContainer {
-    display: flex;
+  display: flex;
 }
 
 .lightText {
-    font-family: 'Open Sans', sans-serif;
-    font-weight: 400;
-    font-size: 12px;
-    text-align: center;
-    color: #828282;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  text-align: center;
+  color: #828282;
 }
 
 .buttonStyle {
-    color: var(--button-blue);
-    cursor: pointer;
+  color: var(--button-blue);
+  cursor: pointer;
 }
 
 .buttonStyle2 {
-    background-color: var(--button-blue);
-    width: 20vw;
-    height: 35px;
-    border-radius: 12px;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    border: none;
-    color: #FFFFFF;
-    cursor: pointer;
+  background-color: var(--button-blue);
+  width: 20vw;
+  height: 35px;
+  border-radius: 12px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
 }
+
 .backButton {
-    display: flex;
-    align-items: center;
-    color: #fff;
-    border: none;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: color 0.3s ease;
-    width: "100%";
-    padding: 50px;
-  }
-  
-  .backButton:hover {
-    color: #0073ff;
-  }
-  
-  .backIcon {
-    margin-right: 5px;
-    font-size: 20px;
-  }
+  display: flex;
+  align-items: center;
+  color: #fff;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  width: "100%";
+  padding: 50px;
+}
 
-  .triangleImage {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 250px;
-  }
+.backButton:hover {
+  color: #0073ff;
+}
 
-  .rightCircleImage {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+.backIcon {
+  margin-right: 5px;
+  font-size: 20px;
+}
 
-  .bottomCircleImage {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-right: 100px;
-    z-index: -1;
-  }
-  
+.triangleImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 250px;
+}
+
+.rightCircleImage {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.bottomCircleImage {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin-right: 100px;
+  z-index: -1;
+}
+
+.logoutDiv {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-left: 50px;
+  color: red;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.logoutIcon {
+  font-size: 20px;
+}

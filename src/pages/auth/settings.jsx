@@ -1,13 +1,33 @@
 import styles from './auth.module.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Form from '../../components/form/form'
 import { useNavigate } from 'react-router-dom'
 import { alertToast, errorToast } from '../../helper/toast'
-import { registerUser } from '../../services/auth'
-import { validateEmail } from '../../helper/utils'
-import GoogleSignInButton from './googleSignInButton'
+import { getUserInfo, registerUser, updateUserData } from '../../services/auth'
+import { getIdFromToken, validateEmail } from '../../helper/utils'
+import { MdLogout } from "react-icons/md";
+import { updateFormData } from '../../services/form'
 
 export default function Settings() {
+
+    useEffect(() => {
+        const getUserData = async () => {
+            if (getIdFromToken()) {
+                const res = await getUserInfo()
+                if (res.status == 200) {
+                    setFormData({
+                        name: res.data.name,
+                        email: res.data.email,
+                        password: "",
+                        confirmPassword: ""
+                    })
+                }
+            }
+        }
+
+        getUserData()
+    }, [])
+
     const navigate = useNavigate()
     const [formData, setFormData] = useState({
         name: "",
@@ -85,16 +105,16 @@ export default function Settings() {
         },
         password: {
             message: "Password should be min 8 characters",
-            isValid: formData.password.length >= 8,
+            isValid: formData.password.length >= 8 || formData.password.length == 0,
             onError: () => {
                 setError((error) => ({ ...error, password: true }))
             }
         },
         confirmPassword: {
             message: "Password should be min 8 characters",
-            isValid: formData.confirmPassword == formData.password,
+            isValid: formData.confirmPassword.length >= 8,
             onError: () => {
-                setError((error) => ({ ...error, password: true }))
+                setError((error) => ({ ...error, confirmPassword: true }))
             }
         }
     }
@@ -109,10 +129,15 @@ export default function Settings() {
             }
         })
         if (!isError) {
-            const res = await registerUser(formData)
+            const res = await updateUserData({
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                newPassword: formData.confirmPassword
+            })
 
             if (res.status == 200) {
-                navigate('/login')
+                // navigate('/login')
                 alertToast(res.message)
             } else {
                 errorToast(res.message)
@@ -124,12 +149,12 @@ export default function Settings() {
 
     const logOut = () => {
         localStorage.removeItem('token')
-        navigate('/')
+        navigate('/login')
     }
 
     return (
         <div className={styles.container}>
-            <h1>Settings</h1>
+            <h1 style={{ marginBottom: 20 }}>Settings</h1>
             <Form
                 formFields={formFields}
                 errorMessages={errorMessages}
@@ -137,12 +162,11 @@ export default function Settings() {
                 onSubmit={onSubmit}
                 buttonText={"Update"}
             />
-            <p className={styles.lightText}>
-                <span
-                    className={styles.buttonStyle}
-                    onClick={() => logOut()}>Logout
-                </span>
-            </p>
+            <div className={styles.logoutDiv} onClick={() => logOut()}>
+                <MdLogout className={styles.logoutIcon} />
+                <p> Log out </p>
+            </div>
+
         </div>
     )
 }

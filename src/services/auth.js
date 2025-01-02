@@ -79,3 +79,23 @@ export const getAllUsers = async () => {
     };
   }
 }
+
+export const updateUserData = async (data) => {
+  try {
+    const headers = addTokenToHeader({headers:{}})
+    if(headers) {
+      const res = await axios.put(`${import.meta.env.VITE_BASE_URL}/api/v1/user/update`, data, 
+        {headers}
+      );
+      return {
+        status: res?.status,
+        message: res?.data.message
+      }
+    }
+  } catch (error) {
+    return {
+      status: error?.status ? error.status : 500,
+      message: error?.response?.data?.message ? error.response.data.message : "Something went wrong"
+    }
+  }
+}
