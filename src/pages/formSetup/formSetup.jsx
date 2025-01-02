@@ -57,10 +57,10 @@ const FormSetup = () => {
             if (res.status == 200) {
                 const workspaceId = res.data.form.workspace
                 const res2 = await getWorkspaceById(workspaceId)
-                if(res2.status == 200){
+                if (res2.status == 200) {
                     const sharedUser = res2.data.workspace?.sharedWith.find((user) => user.user == getIdFromToken())
-                    
-                    if(getIdFromToken() != res2.data.workspace.owner && sharedUser?.accessType == "view") {
+
+                    if (getIdFromToken() != res2.data.workspace.owner && sharedUser?.accessType == "view") {
                         setIsViewOnly(true)
                     } else {
                         setIsViewOnly(false)
@@ -94,7 +94,7 @@ const FormSetup = () => {
     }
 
     function onBubbleSelect(option, from) {
-        if(isViewOnly) {
+        if (isViewOnly) {
             alertToast("You cannot edit this form")
             return
         }
@@ -166,7 +166,7 @@ const FormSetup = () => {
                         type="text"
                         placeholder={option.hint}
                         defaultValue={option.value || ""}
-                        onChange={ !isViewOnly && handleInputChange}
+                        onChange={!isViewOnly && handleInputChange}
                     />
                 }
                 {from == "input" && <p>Hint: {option.hint}</p>}
@@ -191,7 +191,7 @@ const FormSetup = () => {
             alertToast("Please add a button")
             return
         }
-        if(formName.length == 0) {
+        if (formName.length == 0) {
             alertToast("Please add a form name")
             return
         }
@@ -244,19 +244,20 @@ const FormSetup = () => {
                         <FormResponseTable data={formData} />
                     </div>
                     <div className={styles.responseStats}>
-                        <PieChart
-                            data={[
-                                { title: 'Completed', value: formData?.submitCount, color: '#3B82F6' },
-                                { title: '', value: formData?.viewCount - formData?.submitCount, color: '#909090' },
-                            ]}
-                            lineWidth={15}
-                            className={styles.pieChart}
-                            label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}%`}
-                            labelStyle={{
-                                fontSize: '5px',
-                                fontFamily: 'sans-serif',
-                            }}
-                        />
+                        <div className={styles.pieChartContainer}>
+                            <div className={styles.label}>
+                                <p>Completed: {formData?.submitCount}</p>
+                            </div>
+                            <PieChart
+                                data={[
+                                    { title: 'Completed', value: formData?.submitCount, color: '#3B82F6' },
+                                    { title: '', value: formData?.viewCount - formData?.submitCount, color: '#909090' },
+                                ]}
+                                lineWidth={15}
+                                className={styles.pieChart}
+                            />
+                        </div>
+
                         {StatBox("Completion rate", ((formData?.submitCount / formData?.viewCount) * 100).toFixed(2) + "%")}
                     </div>
                 </div>
@@ -306,7 +307,7 @@ const FormSetup = () => {
                     </button>
                     <button
                         className={styles.saveButton}
-                        onClick={() => {!isViewOnly && onSave() }}
+                        onClick={() => { !isViewOnly && onSave() }}
                         style={{ opacity: isViewOnly ? 0.5 : 1 }}
                     >
                         Save

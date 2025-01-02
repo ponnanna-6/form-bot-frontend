@@ -93,7 +93,8 @@
 
 /* Flow resoponse toggle styles */
 
-.flowButton, .responseButton{
+.flowButton,
+.responseButton {
     padding: 8px 16px;
     background-color: transparent;
     color: #fff;
@@ -151,7 +152,8 @@
     text-align: left;
 }
 
-.bubbleContainer, .inputsContainer {
+.bubbleContainer,
+.inputsContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -178,7 +180,7 @@
     font-size: 20px;
 }
 
-.bubble:hover .iconWrapper{
+.bubble:hover .iconWrapper {
     font-size: 24px;
 }
 
@@ -198,7 +200,8 @@
 }
 
 .formContainer::-webkit-scrollbar {
-    width: 6px; /* Set the scrollbar width */
+    width: 6px;
+    /* Set the scrollbar width */
 }
 
 .formContainer::-webkit-scrollbar-thumb {
@@ -254,7 +257,7 @@
     border-radius: 6px;
 }
 
-.inputItem p{
+.inputItem p {
     margin: 0;
     padding: 0;
     color: #555555;
@@ -327,4 +330,18 @@
 .pieChart {
     height: 250px;
     width: 250px;
+}
+
+.pieChartContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-family: sans-serif;
+    text-align: center;
 }
