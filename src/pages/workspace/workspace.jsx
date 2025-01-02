@@ -15,9 +15,9 @@ import SharePopup from "../../components/popups/shareWorkspacePopup";
 import { addForm, deleteform, getAllFormsInWorkspace } from "../../services/form";
 import { getIdFromToken } from "../../helper/utils";
 
-const Workspace = () => {
+const Workspace = ({ setUserLoggedIn }) => {
     const navigate = useNavigate()
-    console.log("---", localStorage.getItem('theme'))
+
     const [isDark, setIsDark] = useState(localStorage.getItem('theme') === 'dark' ? true : false);
     const [workspaces, setWorkspaces] = useState([]);
     const [selectedWorkspace, setSelectedWorkspace] = useState(null);
@@ -59,6 +59,8 @@ const Workspace = () => {
         const userLoggedIn = localStorage.getItem("token")
         if (userLoggedIn) {
             getData()
+        } else {
+            setUserLoggedIn(false)
         }
     }, []);
 

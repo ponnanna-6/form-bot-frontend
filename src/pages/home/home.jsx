@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./home.module.css";
 import desktop from "../../assets/firstDesktop.png";
 import logo from '../../assets/logo.png';
 import { useNavigate } from "react-router-dom";
 import triangle from '../../assets/triangle.png'
 import rightCircle from '../../assets/rightCircle.png'
-const Home = () => {
+import { use } from "react";
+import { getIdFromToken } from "../../helper/utils";
+const Home = ({setUserLoggedIn}) => {
     const navigate = useNavigate()
+
+    useEffect(() => {
+        if (getIdFromToken()) {
+            setUserLoggedIn(true);
+        }
+    }, [])
     function LogoImage() {
         return (
             <div className={styles.logo}>

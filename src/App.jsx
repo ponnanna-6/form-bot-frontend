@@ -3,13 +3,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Register, Login, Home, Settings, Workspace, FormSetup, FormFill} from './pages'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
 function App() {
-  const userLoggedIn = localStorage.getItem('token');
+  const [userLoggedIn, setUserLoggedIn] = useState(localStorage.getItem('token'));
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={!userLoggedIn ? <Home /> : <Workspace />} />
+        <Route path='/' element={!userLoggedIn ? <Home setUserLoggedIn={setUserLoggedIn}/> : <Workspace setUserLoggedIn={setUserLoggedIn}/>} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/settings' element={<Settings />} />
