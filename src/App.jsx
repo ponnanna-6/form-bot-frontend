@@ -14,6 +14,7 @@ function App() {
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         <Route path='/settings' element={<Settings />} />
+        <Route path='/workspace' element={<Workspace setUserLoggedIn={setUserLoggedIn}/>} />
         <Route path='/form/:formId' element={<FormSetup />} />
         <Route path='/form/share/:formId' element={<FormFill />} />
       </Routes>

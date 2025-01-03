@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './popup.module.css'; // Replace with your actual CSS file
 import { alertToast, errorToast } from '../../helper/toast';
 import { validateEmail } from '../../helper/utils';
-import { shareWorkspace } from '../../services/workspace';
+import { generateShareableLink, shareWorkspace } from '../../services/workspace';
 
 const SharePopup = ({ onClose }) => {
     const [email, setEmail] = useState('');
@@ -22,6 +22,7 @@ const SharePopup = ({ onClose }) => {
             errorToast("Enter a valid Email");
         }
     };
+    
 
     return (
         <div className={styles.overlay}>
@@ -48,7 +49,7 @@ const SharePopup = ({ onClose }) => {
                 <button onClick={() => sendInvite()} className={styles.shareButton}>Send Invite</button>
 
                 <h2 style={{ marginBottom: '20px' }}>Invite by link</h2>
-                <button onClick={() => { alertToast("Copied to clipboard") }} className={styles.shareButton}>Copy link</button>
+                <button onClick={() => { generateShareableLink(accessType) }} className={styles.shareButton}>Copy link</button>
             </div>
         </div>
     );

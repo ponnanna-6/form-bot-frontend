@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./workspace.module.css";
 import logo from '../../assets/logo.png';
 import { useNavigate } from "react-router-dom";
-import { getAllWorkspaces } from '../../services/workspace'
+import { getAllWorkspaces, joinWorkspace } from '../../services/workspace'
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { addFolder, deleteFolder, getAllFoldersInWorkspace } from "../../services/folders";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -39,6 +39,14 @@ const Workspace = ({ setUserLoggedIn }) => {
     //share states
     const [showSharePopup, setShowSharePopup] = useState(false);
     const [isViewOnly, setIsViewOnly] = useState(false);
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const token = queryParams.get('token');
+        if (token) {
+            joinWorkspace(token);
+        }
+    }, []);    
 
     useEffect(() => {
         document.addEventListener('mousedown', handleOutsideClick);

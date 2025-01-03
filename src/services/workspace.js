@@ -1,5 +1,6 @@
 import axios from "axios";
 import { addTokenToHeader, getIdFromToken } from "../helper/utils";
+import { alertToast, errorToast } from "../helper/toast";
 
 export const getAllWorkspaces = async () => {
     try {
@@ -63,4 +64,41 @@ export const shareWorkspace = async (data) => {
             message: error?.response?.data?.message ? error.response.data.message : "Something went wrong"
         };
     }
-}   
+}
+export const generateShareableLink = async (accessType) => {
+    try {
+        const headers = addTokenToHeader({ headers: {} });
+        const res = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/v1/workspace/share/generate-link`,
+            { accessType },
+            { headers }
+        );
+
+        if (res.status === 200) {
+            navigator.clipboard.writeText(res.data.link);
+            alertToast("Link copied to clipboard!");
+        } else {
+            errorToast(res.data.message);
+        }
+    } catch (error) {
+        errorToast("Failed to generate link.");
+    }
+};
+
+export const joinWorkspace = async (token) => {
+    try {
+        const headers = addTokenToHeader({ headers: {} });
+        const res = await axios.post(
+            `${import.meta.env.VITE_BASE_URL}/api/v1/workspace/share/join`,
+            { token: token },
+            { headers }
+        );
+        if (res.status === 200) {
+            alertToast(res.data.message);
+        } else {
+            errorToast(res.data.message);
+        }
+    } catch (error) {
+        errorToast("Failed to join workspace.");
+    }
+};
